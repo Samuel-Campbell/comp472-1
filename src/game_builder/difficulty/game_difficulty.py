@@ -11,6 +11,15 @@ class GameDifficulty:
 
     @staticmethod
     def run():
+        """
+        Sets the game's difficulty by prompting the user
+
+        1) Validate for correct inputs
+        2) While input is incorrect re-prompt user
+
+        :return: GameDifficultyEnum
+        """
+
         while True:
             print('\nPlease enter a difficulty:')
             print('Novice: 0')
@@ -24,6 +33,17 @@ class GameDifficulty:
 
     @staticmethod
     def __validate_input(input_str):
+        """
+        Validates the input string of the user
+
+        1) Iterate GameDifficultyEnum list
+        2) if iterated variable matches input_str then return True
+        3) else return False if no matches are found
+
+        :param input_str: string
+        :return: boolean
+        """
+
         for variable in GameDifficultyEnum.MODES:
             if input_str.lower() == variable:
                 GameDifficulty.__play_difficulty = variable

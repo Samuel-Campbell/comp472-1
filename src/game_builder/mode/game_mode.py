@@ -11,6 +11,15 @@ class GameMode:
 
     @staticmethod
     def run():
+        """
+        Obtain game mode from the user's inputs
+
+        1) Ask user to enter a game mode
+        2) While input is not valid then re-prompt user
+
+        :return: PlayModeEnum --> MANUAL or AUTO
+        """
+
         while True:
             print('\nPlease enter a game mode:')
             print('Manual: m/M')
@@ -22,6 +31,17 @@ class GameMode:
 
     @staticmethod
     def __validate_input(input_str):
+        """
+        Confirm whether a user's input is valid or not
+
+        1) Iterate the PlayModeEnum list.
+        2) if user's input corresponds to the enumerate variable then return true
+        3) return false if no match were found
+
+        :param input_str: string
+        :return: boolean
+        """
+
         if input_str.lower() == PlayModeEnum.MANUAL:
             GameMode.__play_mode = PlayModeEnum.MANUAL
             return True

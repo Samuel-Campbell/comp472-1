@@ -11,6 +11,15 @@ class GameBuilder:
 
     @staticmethod
     def build():
+        """
+        Builder pattern
+        1) Ask user for game mode
+        2) Ask user for game difficulty
+        3) If mode set to manual then create a random board
+        4) if mode set to auto then use ML model to solve puzzle
+        :return: None
+        """
+
         mode = GameMode.run()
         difficulty = GameDifficulty.run()
         if mode == PlayModeEnum.MANUAL:

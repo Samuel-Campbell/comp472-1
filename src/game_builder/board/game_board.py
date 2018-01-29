@@ -4,6 +4,8 @@ from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 class GameBoard:
     def __init__(self, verbose=True):
+        self.__original_board = None
+        self.__original_empty_cell = (0, 0)
         self.__board = None
         self.__empty_cell = (0, 0)
         self.__verbose = verbose
@@ -13,7 +15,7 @@ class GameBoard:
         Moves empty cell to the right
         Switches it's value in the array with the one on its right
         If the move is out of bounds then warn the user and do nothing.
-        :return: None
+        :return: boolean
         """
 
         x = self.__empty_cell[0]
@@ -23,13 +25,15 @@ class GameBoard:
             self.__board[y][x + 1] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x + 1, y)
+            return True
         elif self.__verbose:
             print('Cannot move to cell.')
+        return False
 
     def move_down(self):
         """
         Moves empty cell to the right
-        :return: None
+        :return: boolean
         """
 
         x = self.__empty_cell[0]
@@ -39,15 +43,17 @@ class GameBoard:
             self.__board[y + 1][x] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y + 1)
+            return True
         elif self.__verbose:
             print('Cannot move to cell.')
+        return False
     
     def move_left(self):
         """
         Moves empty cell to the left
         Switches it's value in the array with the one on its left
         If the move is out of bounds then warn the user and do nothing.
-        :return: None
+        :return: boolean
         """
 
         x = self.__empty_cell[0]
@@ -57,13 +63,15 @@ class GameBoard:
             self.__board[y][x - 1] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x - 1, y)
+            return True
         elif self.__verbose:
             print('Cannot move to cell.')
+        return False
     
     def move_up(self):
         """
         Moves empty cell up
-        :return: None
+        :return: boolean
         """
 
         x = self.__empty_cell[0]
@@ -73,8 +81,10 @@ class GameBoard:
             self.__board[y - 1][x] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y - 1)
+            return True
         elif self.__verbose:
             print('Cannot move to cell.')
+        return False
     
     def create_random_game(self, game_difficulty):
         """
@@ -108,6 +118,7 @@ class GameBoard:
         middle_row = board[5:10]
         bottom_row = board[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
+        self.__original_board = self.__board.copy()
         self.__find_empty_cell()
     
     def create_game_from_file(self, path):
@@ -126,6 +137,7 @@ class GameBoard:
             for j in range(len(self.__board[i])):
                 if self.__board[i, j] == ' ':
                     self.__empty_cell = (j, i)
+                    self.__original_empty_cell = (j, i)
 
     def display(self):
         """
@@ -149,10 +161,20 @@ class GameBoard:
 
         :return: boolean
         """
-
         if numpy.array_equal(self.__board[0], self.__board[2]):
             return True
         return False
 
     def get_board_state(self):
-        return self.__board
+        """
+        :return: copy of the board
+        """
+        return self.__board.copy()
+
+    def reset_board(self):
+        """
+        resets board to original state
+        :return: None
+        """
+        self.__board = self.__original_board.copy()
+        self.__empty_cell = (self.__original_empty_cell[0], self.__original_empty_cell[1])

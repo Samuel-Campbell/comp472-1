@@ -3,9 +3,10 @@ from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 
 class GameBoard:
-    def __init__(self):
+    def __init__(self, verbose=True):
         self.__board = None
         self.__empty_cell = (0, 0)
+        self.__verbose = verbose
 
     def move_right(self):
         """
@@ -22,7 +23,7 @@ class GameBoard:
             self.__board[y][x + 1] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x + 1, y)
-        else:
+        elif self.__verbose:
             print('Cannot move to cell.')
 
     def move_down(self):
@@ -38,7 +39,7 @@ class GameBoard:
             self.__board[y + 1][x] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y + 1)
-        else:
+        elif self.__verbose:
             print('Cannot move to cell.')
     
     def move_left(self):
@@ -56,7 +57,7 @@ class GameBoard:
             self.__board[y][x - 1] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x - 1, y)
-        else:
+        elif self.__verbose:
             print('Cannot move to cell.')
     
     def move_up(self):
@@ -72,7 +73,7 @@ class GameBoard:
             self.__board[y - 1][x] = ' '
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y - 1)
-        else:
+        elif self.__verbose:
             print('Cannot move to cell.')
     
     def create_random_game(self, game_difficulty):
@@ -120,7 +121,7 @@ class GameBoard:
 
         :return: None
         """
-        
+
         for i in range(len(self.__board)):
             for j in range(len(self.__board[i])):
                 if self.__board[i, j] == ' ':
@@ -152,3 +153,6 @@ class GameBoard:
         if numpy.array_equal(self.__board[0], self.__board[2]):
             return True
         return False
+
+    def get_board_state(self):
+        return self.__board

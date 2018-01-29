@@ -18,11 +18,12 @@ class GameDifficulty:
             print('Expert: 2')
             print('Master: 3')
             play_mode = input()
-            if GameDifficulty.validate_input(play_mode):
+            if GameDifficulty.__validate_input(play_mode):
                 break
+        return GameDifficulty.play_difficulty
 
     @staticmethod
-    def validate_input(input_str):
+    def __validate_input(input_str):
         for variable in GameDifficultyEnum.MODES:
             if input_str.lower() == variable:
                 GameDifficulty.play_difficulty = variable

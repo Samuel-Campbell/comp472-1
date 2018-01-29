@@ -11,5 +11,3 @@ class AutoGame(AbstractGame):
     def _move(self, input_str):
         raise NotImplementedError
 
-    def _display(self):
-        raise NotImplementedError

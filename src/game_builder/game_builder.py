@@ -14,8 +14,12 @@ class GameBuilder:
         mode = GameMode.run()
         difficulty = GameDifficulty.run()
         if mode == PlayModeEnum.MANUAL:
-            board = GameBoard.create_random_game(difficulty)
+            board = GameBoard()
+            board.create_random_game(difficulty)
             return ManualGame(board)
         else:
-            board = GameBoard.create_game_from_file()
+            # Use multi threading in the future here.
+            # 1 per processor so that ML can solve multiple boards
+            board = GameBoard()
+            board = board.create_game_from_file(None)
             return AutoGame(board)

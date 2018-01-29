@@ -4,7 +4,7 @@ class PlayModeEnum:
 
 
 class GameMode:
-    play_mode = None
+    __play_mode = None
 
     def __init__(self):
         pass
@@ -18,12 +18,12 @@ class GameMode:
             play_mode = input()
             if GameMode.__validate_input(play_mode):
                 break
-        return GameMode.play_mode
+        return GameMode.__play_mode
 
     @staticmethod
     def __validate_input(input_str):
         if input_str.lower() == PlayModeEnum.MANUAL:
-            GameMode.play_mode = PlayModeEnum.MANUAL
+            GameMode.__play_mode = PlayModeEnum.MANUAL
             return True
         elif input_str.lower() == PlayModeEnum.AUTO:
             print('Game mode not yet supported.')

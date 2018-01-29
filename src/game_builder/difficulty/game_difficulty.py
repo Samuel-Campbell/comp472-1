@@ -7,7 +7,7 @@ class GameDifficultyEnum:
 
 
 class GameDifficulty:
-    play_difficulty = None
+    __play_difficulty = None
 
     @staticmethod
     def run():
@@ -20,13 +20,13 @@ class GameDifficulty:
             play_mode = input()
             if GameDifficulty.__validate_input(play_mode):
                 break
-        return GameDifficulty.play_difficulty
+        return GameDifficulty.__play_difficulty
 
     @staticmethod
     def __validate_input(input_str):
         for variable in GameDifficultyEnum.MODES:
             if input_str.lower() == variable:
-                GameDifficulty.play_difficulty = variable
+                GameDifficulty.__play_difficulty = variable
                 return True
         print('Your input is incorrect.')
         return False

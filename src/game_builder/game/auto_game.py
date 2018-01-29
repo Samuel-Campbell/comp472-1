@@ -5,8 +5,11 @@ class AutoGame(AbstractGame):
     def __init__(self, board):
         AbstractGame.__init__(self, board)
 
-    def move(self):
+    def run(self):
         raise NotImplementedError
 
-    def display(self):
+    def _move(self, input_str):
+        raise NotImplementedError
+
+    def _display(self):
         raise NotImplementedError

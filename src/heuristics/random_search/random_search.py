@@ -1,6 +1,5 @@
 from random import randint
-import numpy
-from util.file import File
+from game_builder.game.abstract_game import CommandEnum
 
 
 class RandomSearch:

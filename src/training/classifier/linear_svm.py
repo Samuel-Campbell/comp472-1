@@ -9,7 +9,6 @@ from training.classifier.abstract_classifier import AbstractClassifier
 class LinearSVM(AbstractClassifier):
     def __init__(self, dataset):
         AbstractClassifier.__init__(self, dataset)
-        self.model = None
 
     def train(self):
         """
@@ -47,7 +46,7 @@ class LinearSVM(AbstractClassifier):
             returns: a dict containing the most optimal parameter
                      combination
         """
-        (x_total, y_total) = self.reshape_dataset()
+        x_total, y_total = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(
             x_total, y_total, test_size=0.20, random_state=42)
 

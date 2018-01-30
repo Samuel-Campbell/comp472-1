@@ -9,7 +9,6 @@ import numpy as np
 class NaiveBayes(AbstractClassifier):
     def __init__(self, dataset):
         AbstractClassifier.__init__(self, dataset)
-        self.model = None
 
     def train(self):
         """

@@ -9,20 +9,19 @@ from sklearn.neural_network import MLPClassifier
 class NeuralNetwork(AbstractClassifier):
     def __init__(self, dataset):
         AbstractClassifier.__init__(self, dataset)
-        self.model = None
 
     def train(self):
         """
 
         """
-        (x_total, y_total) = self.reshape_dataset()
+        x_total, y_total = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(
             x_total, y_total, test_size=0.20, random_state=42)
         print("Sample size: {}".format(len(x_total)))
         print("Train size: {}".format(len(x_train)))
         print("Test size: {}".format(len(x_test)))
 
-        print("Training Classifier using Linear SVM")
+        print("Training Classifier using Neural Networks")
         clf = MLPClassifier()
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
@@ -47,19 +46,18 @@ class NeuralNetwork(AbstractClassifier):
             returns: a dict containing the most optimal parameter
                      combination
         """
-        (x_total, y_total) = self.reshape_dataset()
+        x_total, y_total = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(
             x_total, y_total, test_size=0.20, random_state=42)
 
         parameters = {'activation': ('identity', 'logistic', 'tanh',
                                  'relu'),
                       'solver': ('lbfgs', 'sgd', 'adam'),
-                      ' hidden_layer_sizes': ((100,), (5,), (7,))
                       }
 
         nn = MLPClassifier()
         clf = GridSearchCV(nn, parameters)
         clf.fit(x_train, y_train)
-        return clf.best_params_
+        print(clf.best_params_)
 
 

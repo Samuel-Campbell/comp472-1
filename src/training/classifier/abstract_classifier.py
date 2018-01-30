@@ -13,6 +13,7 @@ class AbstractClassifier:
 
     def __init__(self, dataset):
         self.dataset = dataset
+        self.model = None
 
     def train(self):
         raise NotImplementedError
@@ -27,6 +28,16 @@ class AbstractClassifier:
         print(self.model.predict_proba(data))
         prediction = self.model.predict(data)
         return self.int_to_move[prediction[0]]
+
+    def predict_probabilities(self, data):
+        if self.model is None:
+            self.model = File.load_binary('novice_model.bin')
+        data = [data]
+        prediction = self.model.predict_proba(data)[0]
+        return_pred = []
+        for i in range(len(prediction)):
+            return_pred.append([prediction[i], self.int_to_move[i]])
+        return return_pred
 
     def reshape_dataset(self):
         x_total = []

@@ -1,5 +1,7 @@
 from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 from heuristics.random_search import random_search_driver
+from heuristics.depth_first_search import depth_first_search_driver
+from util.file import File
 
 
 def random_search():
@@ -9,9 +11,19 @@ def random_search():
     # random_search(GameDifficultyEnum.MASTER, 'master_random.bin', 100, 2000)
 
 
-def intuitive_search():
-    pass
+def depth_first_search():
+    model = File.load_binary('novice_dfs.bin')
+    depth_first_search_driver.run(model, GameDifficultyEnum.NOVICE, 'novice_dfs.bin', 10000)
 
+    # model = File.load_binary('apprentice_random.bin')
+    # depth_first_search_driver.run(model, GameDifficultyEnum.APPRENTICE, 'apprentice_dfs.bin', 5000)
+
+    # model = File.load_binary('expert_random.bin')
+    # depth_first_search_driver.run(model, GameDifficultyEnum.EXPERT, 'expert_dfs.bin', 5000)
+
+    # model = File.load_binary('master_random.bin')
+    # depth_first_search_driver.run(model, GameDifficultyEnum.MASTER, 'master_dfs.bin', 5000)
 
 if __name__ == '__main__':
-    random_search()
+    #random_search()
+    depth_first_search()

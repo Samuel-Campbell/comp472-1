@@ -159,9 +159,9 @@ class GameBoard:
         :return: None
         """
         print()
-        print(self.__board[0])
-        print(self.__board[1])
-        print(self.__board[2])
+        print([self.int_to_candy[x] for x in self.__board[0]])
+        print([self.int_to_candy[x] for x in self.__board[1]])
+        print([self.int_to_candy[x] for x in self.__board[2]])
 
     def game_cleared(self):
         """

@@ -13,7 +13,7 @@ class NaiveBayes(AbstractClassifier):
 
     def train(self):
         """
-            Trains the Linear Support Vector Machine.
+
         """
         (x_total, y_total) = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(

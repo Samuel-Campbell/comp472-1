@@ -9,6 +9,9 @@ class File:
     @staticmethod
     def load_binary(filename):
         """
+        returns binarized model
+        :param filename: name of file to load
+        :return: None
         """
         try:
             print("Loading " + filename)
@@ -26,6 +29,7 @@ class File:
     @staticmethod
     def save_binary(filename, model):
         """
+        saves a binary model
         :return: None
         """
         root_directory = os.path.abspath(__file__ + "r/../../")

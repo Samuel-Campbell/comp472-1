@@ -1,4 +1,5 @@
 from game_builder.game.abstract_game import AbstractGame
+from training.classifier.linear_svm import LinearSVM
 
 
 class AutoGame(AbstractGame):
@@ -6,8 +7,10 @@ class AutoGame(AbstractGame):
         AbstractGame.__init__(self, board)
 
     def run(self):
-        raise NotImplementedError
-
-    def _move(self, input_str):
-        raise NotImplementedError
-
+        svm = LinearSVM(None)
+        steps = 0
+        while not self._board.game_cleared():
+            input_str = svm.predict(self._board.get_board_state())
+            self._move(input_str)
+            steps += 1
+        print('Auto Clear in {} Steps'.format(str(steps)))

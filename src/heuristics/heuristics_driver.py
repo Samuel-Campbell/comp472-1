@@ -22,7 +22,7 @@ def random_search(difficulty, filename, nb_of_boards, nb_of_search, max_iter=100
 
 
 if __name__ == '__main__':
-    random_search(GameDifficultyEnum.NOVICE, 'novice_random.bin', 100, 250)
-    random_search(GameDifficultyEnum.APPRENTICE, 'apprentice_random.bin', 100, 500)
-    random_search(GameDifficultyEnum.EXPERT, 'expert_random.bin', 100, 1000)
-    random_search(GameDifficultyEnum.MASTER, 'expert_random.bin', 100, 2000)
+    random_search(GameDifficultyEnum.NOVICE, 'novice_random.bin', 1000, 500)
+    #random_search(GameDifficultyEnum.APPRENTICE, 'apprentice_random.bin', 100, 500)
+    #random_search(GameDifficultyEnum.EXPERT, 'expert_random.bin', 100, 1000)
+    #random_search(GameDifficultyEnum.MASTER, 'master_random.bin', 100, 2000)

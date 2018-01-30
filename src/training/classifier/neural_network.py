@@ -1,12 +1,12 @@
-from sklearn import svm
+from training.classifier.abstract_classifier import AbstractClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import precision_recall_fscore_support
 import numpy as np
 from util.file import File
-from training.classifier.abstract_classifier import AbstractClassifier
+from sklearn.neural_network import MLPClassifier
 
 
-class LinearSVM(AbstractClassifier):
+class NeuralNetwork(AbstractClassifier):
     def __init__(self, dataset):
         AbstractClassifier.__init__(self, dataset)
         self.model = None
@@ -23,7 +23,7 @@ class LinearSVM(AbstractClassifier):
         print("Test size: {}".format(len(x_test)))
 
         print("Training Classifier using Linear SVM")
-        clf = svm.SVC(kernel='poly', random_state=42, C=3, probability=True)
+        clf = MLPClassifier()
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
         File.save_binary('novice_model.bin', self.model)
@@ -51,13 +51,15 @@ class LinearSVM(AbstractClassifier):
         x_train, x_test, y_train, y_test = train_test_split(
             x_total, y_total, test_size=0.20, random_state=42)
 
-        parameters = {'kernel': ('linear', 'poly', 'sigmoid',
-                                 'rbf'),
-                      'C': [0.7, 3, 4, 5]
+        parameters = {'activation': ('identity', 'logistic', 'tanh',
+                                 'relu'),
+                      'solver': ('lbfgs', 'sgd', 'adam'),
+                      ' hidden_layer_sizes': ((100,), (5,), (7,))
                       }
 
-        svc = svm.SVC()
-        clf = GridSearchCV(svc, parameters)
+        nn = MLPClassifier()
+        clf = GridSearchCV(nn, parameters)
         clf.fit(x_train, y_train)
         return clf.best_params_
+
 

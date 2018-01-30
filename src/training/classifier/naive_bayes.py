@@ -1,12 +1,12 @@
-from sklearn import svm
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import precision_recall_fscore_support
-import numpy as np
-from util.file import File
 from training.classifier.abstract_classifier import AbstractClassifier
+from util.file import File
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_recall_fscore_support
+from sklearn.naive_bayes import GaussianNB
+import numpy as np
 
 
-class LinearSVM(AbstractClassifier):
+class NaiveBayes(AbstractClassifier):
     def __init__(self, dataset):
         AbstractClassifier.__init__(self, dataset)
         self.model = None
@@ -22,8 +22,8 @@ class LinearSVM(AbstractClassifier):
         print("Train size: {}".format(len(x_train)))
         print("Test size: {}".format(len(x_test)))
 
-        print("Training Classifier using Linear SVM")
-        clf = svm.SVC(kernel='poly', random_state=42, C=3, probability=True)
+        print("Using Naive Bayes")
+        clf = GaussianNB()
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
         File.save_binary('novice_model.bin', self.model)
@@ -39,25 +39,3 @@ class LinearSVM(AbstractClassifier):
         print('Precision: {}'.format(precision))
         print('Recall: {}'.format(recall))
         print('F1: {}'.format(f1))
-
-    def evaluate_best_parameters(self):
-        """
-            Evaluate several different parameter combinations and
-            returns the best combination.
-            returns: a dict containing the most optimal parameter
-                     combination
-        """
-        (x_total, y_total) = self.reshape_dataset()
-        x_train, x_test, y_train, y_test = train_test_split(
-            x_total, y_total, test_size=0.20, random_state=42)
-
-        parameters = {'kernel': ('linear', 'poly', 'sigmoid',
-                                 'rbf'),
-                      'C': [0.7, 3, 4, 5]
-                      }
-
-        svc = svm.SVC()
-        clf = GridSearchCV(svc, parameters)
-        clf.fit(x_train, y_train)
-        return clf.best_params_
-

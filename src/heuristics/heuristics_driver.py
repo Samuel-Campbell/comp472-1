@@ -33,7 +33,7 @@ def save_best_result(permutation, best_search_dict):
 
 
 if __name__ == '__main__':
-    random_search(GameDifficultyEnum.NOVICE, 'novice_random.bin', 1000, 1000, 35)
+    random_search(GameDifficultyEnum.NOVICE, 'novice_random.bin', 5000, 1000, 35)
     #random_search(GameDifficultyEnum.APPRENTICE, 'apprentice_random.bin', 100, 500)
     #random_search(GameDifficultyEnum.EXPERT, 'expert_random.bin', 100, 1000)
     #random_search(GameDifficultyEnum.MASTER, 'master_random.bin', 100, 2000)

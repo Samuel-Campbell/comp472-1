@@ -3,6 +3,16 @@ from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 
 class GameBoard:
+    int_to_candy = {
+        0: ' ',
+        1: 'r',
+        2: 'b',
+        3: 'w',
+        4: 'y',
+        5: 'g',
+        6: 'p'
+    }
+
     def __init__(self, verbose=True):
         self.__original_board = None
         self.__original_empty_cell = (0, 0)
@@ -22,7 +32,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if x < (len(self.__board[0]) - 1):
             tmp = self.__board[y][x + 1]
-            self.__board[y][x + 1] = ' '
+            self.__board[y][x + 1] = 0
             self.__board[y][x] = tmp
             self.__empty_cell = (x + 1, y)
             return True
@@ -40,7 +50,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if y < (len(self.__board) - 1):
             tmp = self.__board[y + 1][x]
-            self.__board[y + 1][x] = ' '
+            self.__board[y + 1][x] = 0
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y + 1)
             return True
@@ -60,7 +70,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if x > 0:
             tmp = self.__board[y][x - 1]
-            self.__board[y][x - 1] = ' '
+            self.__board[y][x - 1] = 0
             self.__board[y][x] = tmp
             self.__empty_cell = (x - 1, y)
             return True
@@ -78,7 +88,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if y > 0:
             tmp = self.__board[y - 1][x]
-            self.__board[y - 1][x] = ' '
+            self.__board[y - 1][x] = 0
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y - 1)
             return True
@@ -102,16 +112,16 @@ class GameBoard:
 
         board_list = []
         if game_difficulty == GameDifficultyEnum.NOVICE:
-            board_list = [' ', 'r', 'r', 'r', 'r', 'r', 'r', 'b', 'b', 'b', 'b', 'b', 'b', 'w', 'w']
+            board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3]
 
         elif game_difficulty == GameDifficultyEnum.APPRENTICE:
-            board_list = [' ', 'r', 'r', 'r', 'r', 'r', 'r', 'b', 'b', 'b', 'b', 'w', 'w', 'y', 'y']
+            board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4]
 
         elif game_difficulty == GameDifficultyEnum.EXPERT:
-            board_list = [' ', 'r', 'r', 'r', 'r', 'b', 'b', 'b', 'b', 'w', 'w', 'y', 'y', 'g', 'g']
+            board_list = [0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5]
 
         elif game_difficulty == GameDifficultyEnum.MASTER:
-            board_list = [' ', 'r', 'r', 'r', 'r', 'b', 'b', 'w', 'w', 'y', 'y', 'g', 'g', 'p', 'p']
+            board_list = [0, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
         board = numpy.array(board_list)
         numpy.random.shuffle(board)
         top_row = board[:5]
@@ -135,7 +145,7 @@ class GameBoard:
 
         for i in range(len(self.__board)):
             for j in range(len(self.__board[i])):
-                if self.__board[i, j] == ' ':
+                if self.__board[i, j] == 0:
                     self.__empty_cell = (j, i)
                     self.__original_empty_cell = (j, i)
 
@@ -148,7 +158,6 @@ class GameBoard:
 
         :return: None
         """
-
         print()
         print(self.__board[0])
         print(self.__board[1])
@@ -169,7 +178,8 @@ class GameBoard:
         """
         :return: copy of the board
         """
-        return self.__board.copy()
+        board = self.__board.copy()
+        return numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
 
     def reset_board(self):
         """
@@ -177,4 +187,4 @@ class GameBoard:
         :return: None
         """
         self.__board = self.__original_board.copy()
-        self.__empty_cell = (self.__original_empty_cell[0], self.__original_empty_cell[1])
+        self.__empty_cell = self.__original_empty_cell[0], self.__original_empty_cell[1]

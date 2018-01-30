@@ -5,8 +5,9 @@ from game_builder.game.abstract_game import CommandEnum
 class RandomSearch:
     def __init__(self, board, max_iter):
         self.board = board
+        self.board_sates = []
         self.max_iter = max_iter
-        self.permutations = {}
+        self.__best_permutation = []
 
     def search(self, run):
         self.board.reset_board()
@@ -14,38 +15,32 @@ class RandomSearch:
         moves = []
         while iteration < self.max_iter:
             state = self.board.get_board_state()
-            move = self.__randomize_move()
-            if move:
-                moves.append([state, move])
+            next_move = self.__randomize_move()
+            if next_move[0]:
+                moves.append([state, next_move[1]])
                 iteration += 1
             if self.board.game_cleared():
-                moves.append([state, move])
                 break
         if iteration < self.max_iter:
-            self.permutations[run] = moves
+            if len(self.__best_permutation) == 0:
+                self.__best_permutation = moves.copy()
+            elif len(self.__best_permutation) > len(moves):
+                self.__best_permutation = moves.copy()
 
     def __randomize_move(self):
         move = randint(0, 3)
+        result = False
         if move == 0:
-            self.board.move_up()
+            result = self.board.move_up()
         elif move == 1:
-            self.board.move_down()
+            result = self.board.move_down()
         elif move == 2:
-            self.board.move_right()
+            result = self.board.move_right()
         elif move == 3:
-            self.board.move_left()
-        return move
+            result = self.board.move_left()
+        return result, move
 
-    def get_min(self):
-        min_val = 9999
-        key = None
-        for searches in self.permutations:
-            steps = (len(self.permutations[searches]))
-            if steps < min_val:
-                key = searches
-                min_val = steps
-        if key is not None:
-            return self.permutations[key]
-
-    def reset(self):
-        self.permutations = {}
+    def get_best_permutation(self):
+        for i in range(len(self.__best_permutation)):
+            self.__best_permutation[i] += [len(self.__best_permutation) - i]
+        return self.__best_permutation

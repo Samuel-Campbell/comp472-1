@@ -7,16 +7,6 @@ from util.file import File
 
 class LinearSVM:
 
-    candy_to_int = {
-        ' ': 0,
-        'r': 1,
-        'b': 2,
-        'w': 3,
-        'y': 4,
-        'g': 5,
-        'p': 6
-    }
-
     int_to_move = {
         0: 'u',
         1: 'd',
@@ -31,9 +21,8 @@ class LinearSVM:
     def predict(self, data):
         if self.model is None:
             self.model = File.load_binary('novice_svm.bin')
-        x = list(data[0]) + list(data[1]) + list(data[2])
-        x = np.array([x])
-        prediction = self.model.predict(x)
+        data = [data]
+        prediction = self.model.predict(data)
         return self.int_to_move[prediction[0]]
 
     def train(self):
@@ -48,7 +37,7 @@ class LinearSVM:
         print("Test size: {}".format(len(x_test)))
 
         print("Training Classifier using Linear SVM")
-        clf = svm.SVC(kernel='poly', random_state=42, C=3)
+        clf = svm.SVC(kernel='poly', random_state=42, C=3, probability=True)
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
         File.save_binary('novice_svm.bin', self.model)
@@ -99,9 +88,6 @@ class LinearSVM:
                 x_total.append(x)
                 y_total.append(step[1])
 
-        for i in range(len(x_total)):
-            for j in range(len(x_total[i])):
-                x_total[i][j] = self.candy_to_int[x_total[i][j]]
         x_total = np.array(x_total)
         y_total = np.array(y_total)
         return x_total , y_total

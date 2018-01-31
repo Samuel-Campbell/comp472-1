@@ -1,16 +1,18 @@
 from heuristics.depth_first_search.depth_first_search import DepthFirstSearch
 from game_builder.board.game_board import GameDifficultyEnum, GameBoard
+from training.classifier.abstract_classifier import AbstractClassifier
 from util.file import File
 from sys import stdout
 
 
 def run(model, difficulty, filename, nb_of_boards):
     maximum_steps = 0
+    DepthFirstSearch.clf = AbstractClassifier(None)
     for permutation in model:
         if maximum_steps < model[permutation][2]:
             maximum_steps = model[permutation][2]
     print('Max steps: {}'.format(str(maximum_steps)))
-    best_search_dict = {}
+    best_search_dict = model
     for i in range(nb_of_boards):
         board = GameBoard(verbose=False)
         board.create_random_game(difficulty)

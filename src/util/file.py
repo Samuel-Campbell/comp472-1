@@ -1,5 +1,6 @@
 import os
 import joblib
+import shutil
 
 
 class File:
@@ -33,8 +34,15 @@ class File:
         :return: None
         """
         root_directory = os.path.abspath(__file__ + "r/../../")
-        rel_path = r'data/binary/' + filename
-        file_path = os.path.join(root_directory, rel_path)
+        bin_dir = r'data/binary/' + filename
+        backup_dir = r'data/backup/' + filename
+        file_path = os.path.join(root_directory, bin_dir)
+        backup_path = os.path.join(root_directory, backup_dir)
+        try:
+            print("Backing up " + filename + " to: " + backup_path)
+            shutil.copy(file_path, backup_path)
+        except:
+            print('Error while back up')
         print("saving " + filename + " to: " + file_path)
         joblib.dump(model, file_path)
         print(filename + " saved to: " + file_path)

@@ -5,15 +5,15 @@ from util.file import File
 
 
 def random_search():
-    random_search_driver.run(GameDifficultyEnum.NOVICE, 'novice_random.bin', 5000, 1000, 35)
+    random_search_driver.run(GameDifficultyEnum.NOVICE, 'novice_data.bin', 5000, 1000, 35)
     # random_search(GameDifficultyEnum.APPRENTICE, 'apprentice_random.bin', 100, 500)
     # random_search(GameDifficultyEnum.EXPERT, 'expert_random.bin', 100, 1000)
     # random_search(GameDifficultyEnum.MASTER, 'master_random.bin', 100, 2000)
 
 
 def depth_first_search():
-    model = File.load_binary('novice_dfs.bin')
-    depth_first_search_driver.run(model, GameDifficultyEnum.NOVICE, 'novice_dfs.bin', 10000)
+    model = File.load_binary('novice_data.bin')
+    depth_first_search_driver.run(model, GameDifficultyEnum.NOVICE, 'novice_data.bin', 5000)
 
     # model = File.load_binary('apprentice_random.bin')
     # depth_first_search_driver.run(model, GameDifficultyEnum.APPRENTICE, 'apprentice_dfs.bin', 5000)

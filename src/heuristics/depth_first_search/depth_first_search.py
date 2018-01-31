@@ -1,9 +1,5 @@
-from training.classifier.abstract_classifier import AbstractClassifier
-import time
-
-
 class DepthFirstSearch:
-    clf = AbstractClassifier(None)
+    clf = None
 
     move_to_int = {
         'u': 0,

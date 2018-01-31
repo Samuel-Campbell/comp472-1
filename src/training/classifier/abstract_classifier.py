@@ -22,16 +22,12 @@ class AbstractClassifier:
         raise NotImplementedError
 
     def predict(self, data):
-        if self.model is None:
-            self.model = File.load_binary('novice_model.bin')
         data = [data]
         print(self.model.predict_proba(data))
         prediction = self.model.predict(data)
         return self.int_to_move[prediction[0]]
 
     def predict_probabilities(self, data):
-        if self.model is None:
-            self.model = File.load_binary('novice_model.bin')
         data = [data]
         prediction = self.model.predict_proba(data)[0]
         return_pred = []

@@ -5,9 +5,13 @@ from util.file import File
 from sys import stdout
 
 
-def run(model, difficulty, filename, nb_of_boards):
-    maximum_steps = 1
+def run(difficulty, filename, nb_of_boards, prediction_name, maximum_steps=1):
+    model = File.load_binary(filename)
+    if model is None:
+        model = {}
+    prediction_model = File.load_binary(prediction_name)
     DepthFirstSearch.clf = AbstractClassifier(None)
+    DepthFirstSearch.clf.model = prediction_model
     print('Max steps: {}'.format(str(maximum_steps)))
     best_search_dict = model
     for i in range(nb_of_boards):

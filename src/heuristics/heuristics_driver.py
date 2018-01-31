@@ -13,7 +13,9 @@ def random_search():
 
 def depth_first_search():
     model = File.load_binary('novice_data.bin')
-    depth_first_search_driver.run(model, GameDifficultyEnum.NOVICE, 'novice_data.bin', 5000)
+    if model is None:
+        model = {}
+    depth_first_search_driver.run(model, GameDifficultyEnum.NOVICE, 'novice_data.bin', 1000)
 
     # model = File.load_binary('apprentice_random.bin')
     # depth_first_search_driver.run(model, GameDifficultyEnum.APPRENTICE, 'apprentice_dfs.bin', 5000)

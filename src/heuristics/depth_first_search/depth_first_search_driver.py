@@ -6,11 +6,8 @@ from sys import stdout
 
 
 def run(model, difficulty, filename, nb_of_boards):
-    maximum_steps = 0
+    maximum_steps = 1
     DepthFirstSearch.clf = AbstractClassifier(None)
-    for permutation in model:
-        if maximum_steps < model[permutation][2]:
-            maximum_steps = model[permutation][2]
     print('Max steps: {}'.format(str(maximum_steps)))
     best_search_dict = model
     for i in range(nb_of_boards):
@@ -23,6 +20,9 @@ def run(model, difficulty, filename, nb_of_boards):
             percent = (i / nb_of_boards) * 100
             stdout.write("\rProgress: %f " % percent)
             stdout.flush()
+        else:
+            maximum_steps += 1
+            print('Maximum steps increased to {}'.format(str(maximum_steps)))
     File.save_binary(filename, best_search_dict)
 
 

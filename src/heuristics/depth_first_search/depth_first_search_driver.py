@@ -28,6 +28,7 @@ def run(difficulty, filename, nb_of_boards, prediction_name, maximum_steps=1):
             maximum_steps += 1
             print('Maximum steps increased to {}'.format(str(maximum_steps)))
     File.save_binary(filename, best_search_dict)
+    return maximum_steps
 
 
 def __save_best_result(permutation, best_search_dict):

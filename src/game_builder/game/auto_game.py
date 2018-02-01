@@ -1,18 +1,36 @@
 from game_builder.game.abstract_game import AbstractGame
-from training.classifier.linear_svm import LinearSVM
+from training.classifier.abstract_classifier import AbstractClassifier
 import time
+from util.file import File
+from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 
 class AutoGame(AbstractGame):
+    move_to_int = {
+        0: 'u',
+        1: 'd',
+        2: 'r',
+        3: 'l'
+    }
+
     def __init__(self, board):
         AbstractGame.__init__(self, board)
 
     def run(self):
-        svm = LinearSVM(None)
+        clf = AbstractClassifier(None).model
+        if self._board.difficulty == GameDifficultyEnum.NOVICE:
+            clf = File.load_binary('novice_model.bin')
+        elif self._board.difficulty == GameDifficultyEnum.APPRENTICE:
+            clf = File.load_binary('apprentice_model.bin')
+        elif self._board.difficulty == GameDifficultyEnum.EXPERT:
+            clf = File.load_binary('expert_model.bin')
+        elif self._board.difficulty == GameDifficultyEnum.MASTER:
+            clf = File.load_binary('master_model.bin')
         steps = 0
         while not self._board.game_cleared():
-            input_str = svm.predict(self._board.get_board_state())
-            self._move(input_str)
+            input_str = clf.predict([self._board.get_board_state()])
+            next_move = self.move_to_int[input_str[0]]
+            self._move(next_move)
             self._board.display()
             steps += 1
             time.sleep(1)

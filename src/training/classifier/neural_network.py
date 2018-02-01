@@ -25,7 +25,6 @@ class NeuralNetwork(AbstractClassifier):
         clf = MLPClassifier(hidden_layer_sizes=(100, 10))
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
-        File.save_binary('novice_model.bin', self.model)
 
     def test(self, x_test, y_test):
         # Test
@@ -55,7 +54,7 @@ class NeuralNetwork(AbstractClassifier):
         parameters = {'activation': ('identity', 'logistic', 'tanh',
                                  'relu'),
                       'solver': ('lbfgs', 'sgd', 'adam'),
-                      'hidden_layer_sizes': ((100, 10), (100, 5))
+                      'hidden_layer_sizes': ((100), (100, 10), (100, 5))
                       }
 
         nn = MLPClassifier()

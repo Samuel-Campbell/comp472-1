@@ -14,6 +14,7 @@ class AbstractClassifier:
     def __init__(self, dataset):
         self.dataset = dataset
         self.model = None
+        self.decay_dict = {}
 
     def train(self):
         raise NotImplementedError
@@ -44,3 +45,6 @@ class AbstractClassifier:
         x_total = np.array(x_total)
         y_total = np.array(y_total)
         return x_total , y_total
+
+    def save(self, binary_name):
+        File.save_binary(binary_name, self.model)

@@ -19,6 +19,7 @@ class GameBoard:
         self.__board = None
         self.__empty_cell = (0, 0)
         self.__verbose = verbose
+        self.difficulty = None
 
     def move_right(self):
         """
@@ -109,7 +110,7 @@ class GameBoard:
         :param game_difficulty: GameDifficultyEnum --> '0', '1', '2', '3'
         :return: None
         """
-
+        self.difficulty = game_difficulty
         board_list = []
         if game_difficulty == GameDifficultyEnum.NOVICE:
             board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3]

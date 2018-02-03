@@ -12,7 +12,7 @@ class LinearSVM(AbstractClassifier):
 
     def train(self):
         """
-            Trains the Linear Support Vector Machine.
+        Trains the Linear Support Vector Machine.
         """
         (x_total, y_total) = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(
@@ -41,10 +41,10 @@ class LinearSVM(AbstractClassifier):
 
     def evaluate_best_parameters(self):
         """
-            Evaluate several different parameter combinations and
-            returns the best combination.
-            returns: a dict containing the most optimal parameter
-                     combination
+        Evaluate several different parameter combinations and
+        returns the best combination.
+        returns: a dict containing the most optimal parameter
+                 combination
         """
         x_total, y_total = self.reshape_dataset()
         x_train, x_test, y_train, y_test = train_test_split(
@@ -59,4 +59,3 @@ class LinearSVM(AbstractClassifier):
         clf = GridSearchCV(svc, parameters)
         clf.fit(x_train, y_train)
         return clf.best_params_
-

@@ -40,10 +40,10 @@ class NeuralNetwork(AbstractClassifier):
 
     def evaluate_best_parameters(self):
         """
-            Evaluate several different parameter combinations and
-            returns the best combination.
-            returns: a dict containing the most optimal parameter
-                     combination
+        Evaluate several different parameter combinations and
+        returns the best combination.
+        returns: a dict containing the most optimal parameter
+                 combination
         """
         x_total, y_total = self.reshape_dataset()
         x_total = x_total[:2000]

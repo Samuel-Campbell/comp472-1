@@ -20,7 +20,6 @@ class NaiveBayes(AbstractClassifier):
         print("Sample size: {}".format(len(x_total)))
         print("Train size: {}".format(len(x_train)))
         print("Test size: {}".format(len(x_test)))
-
         print("Using Naive Bayes")
         clf = GaussianNB()
         self.model = clf.fit(x_train, y_train)

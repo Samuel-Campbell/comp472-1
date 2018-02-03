@@ -5,15 +5,29 @@ from util.file import File
 from sys import stdout
 
 
-def run(difficulty, filename, nb_of_boards, prediction_name, maximum_steps=1):
-    model = File.load_binary(filename)
-    if model is None:
-        model = {}
-    prediction_model = File.load_binary(prediction_name)
+def run(difficulty, filename, nb_of_boards, prediction_model, maximum_steps=1):
+    """
+    1) Load data points
+    2) Load the ML model
+    3) perform DFS
+    4) if a search is successful then save it in the dictionary
+    5) once all points are collected then overwrite old model with new one
+
+    :param difficulty: difficulty level [0, 3] where 3 is the hardest
+    :param filename: Name of data point dictionary file
+    :param nb_of_boards: Number of random boards to generate
+    :param prediction_model: Prediction model to use (based on difficulty)
+    :param maximum_steps: Maximum amount of steps before a string is considered a failure
+    :return: None
+    """
+    data = File.load_binary(filename)
+    if data is None:
+        data = {}
+    prediction_model = File.load_binary(prediction_model)
     DepthFirstSearch.clf = AbstractClassifier(None)
     DepthFirstSearch.clf.model = prediction_model
     print('Max steps: {}'.format(str(maximum_steps)))
-    best_search_dict = model
+    best_search_dict = data
     for i in range(nb_of_boards):
         board = GameBoard(verbose=False)
         board.create_random_game(difficulty)

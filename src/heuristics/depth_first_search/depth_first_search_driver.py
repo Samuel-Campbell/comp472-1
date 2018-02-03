@@ -17,7 +17,7 @@ def run(difficulty, filename, nb_of_boards, prediction_model, maximum_steps=1):
     :param filename: Name of data point dictionary file
     :param nb_of_boards: Number of random boards to generate
     :param prediction_model: Prediction model to use (based on difficulty)
-    :param maximum_steps: Maximum amount of steps before a string is considered a failure
+    :param maximum_steps: Maximum amount of steps before failure
     :return: None
     """
     data = File.load_binary(filename)

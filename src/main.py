@@ -1,7 +1,9 @@
 from game_builder.game_builder import GameBuilder
+from training import training_driver
+import sys
 
 
-def run():
+def play():
     """
     Main driver of the program
     1) Builds the game
@@ -25,5 +27,15 @@ def run():
     print('Thanks for playing')
 
 
+def train():
+    training_driver.run()
+
+
 if __name__ == '__main__':
-    run()
+    command = sys.argv[1]
+    if command == 'train':
+        train()
+    elif command == 'play':
+        play()
+    else:
+        print('Argument {} not recognized'.format(command))

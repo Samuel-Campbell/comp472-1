@@ -1,8 +1,8 @@
 Running the game
 -
-python3 main.py
+python3 main.py play
 
 Training the model
 -
-TBD
+python3 main.py train
 

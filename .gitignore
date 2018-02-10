@@ -108,3 +108,5 @@ venv.bak/
 /.idea/
 /src/data/binary/
 /src/data/backup/
+!/src/data/backup/__init__.py
+!/src/data/binary/__init__.py

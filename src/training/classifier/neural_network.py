@@ -22,7 +22,7 @@ class NeuralNetwork(AbstractClassifier):
         print("Test size: {}".format(len(x_test)))
 
         print("Training Classifier using Neural Networks")
-        clf = MLPClassifier(hidden_layer_sizes=(100, 10))
+        clf = MLPClassifier()
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
 
@@ -46,8 +46,8 @@ class NeuralNetwork(AbstractClassifier):
                  combination
         """
         x_total, y_total = self.reshape_dataset()
-        x_total = x_total[:2000]
-        y_total = y_total[:2000]
+        x_total = x_total[:5000]
+        y_total = y_total[:5000]
         x_train, x_test, y_train, y_test = train_test_split(
             x_total, y_total, test_size=0.20, random_state=42)
 

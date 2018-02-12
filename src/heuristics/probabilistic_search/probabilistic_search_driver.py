@@ -9,8 +9,8 @@ def run(difficulty):
     board = GameBoard(verbose=False)
     board.create_random_game(difficulty)
     dfs = ProbabilisticSearch(board)
-    result = dfs.search()
-    print(result)
+    dfs.search()
+    print(len(dfs.move_sequence))
 
 
 if __name__ == '__main__':
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     ProbabilisticSearch.clf = AbstractClassifier(None)
     ProbabilisticSearch.clf.model = prediction_model
     start = time.time()
-    for i in range(10):
+    for i in range(1):
         run(GameDifficultyEnum.NOVICE)
     end = time.time()
     print(end - start)

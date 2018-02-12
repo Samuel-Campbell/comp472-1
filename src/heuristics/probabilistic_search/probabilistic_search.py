@@ -5,38 +5,39 @@ class ProbabilisticSearch:
         self.board_states = {}
         self.board = board
         self.move_sequence = []
+        self.mistakes = 0
 
-    def new_game_state(self, game_state):
+    def next_move(self, game_state):
         if str(game_state) in self.board_states:
-            return False
-        self.board_states[str(game_state)] = ''
-        return True
-
-    def correct_move(self, probabilities, game_state):
-        self.move(probabilities)
-        if self.new_game_state(game_state):
-            return True
+            try:
+                self.board_states[str(game_state)].pop()
+            except IndexError:
+                pass
         else:
-            self.undo_move(probabilities)
-        return False
+            move_prob = ProbabilisticSearch.clf.predict_probabilities(game_state)
+            move_prob.sort(key=lambda x: x[0])
+            self.board_states[str(game_state)] = move_prob
+        return self.board_states[str(game_state)]
 
     def search(self):
         while not(self.board.game_cleared()):
             game_state = self.board.get_board_state().copy()
-            probabilities = ProbabilisticSearch.clf.predict_probabilities(game_state)
-            probabilities.sort(key=lambda x: x[0])
+            next_move = self.next_move(game_state)
 
-            if self.correct_move(probabilities[3][1], game_state):
-                pass
-            elif self.correct_move(probabilities[2][1], game_state):
-                pass
-            elif self.correct_move(probabilities[1][1], game_state):
-                pass
-            elif self.correct_move(probabilities[0][1], game_state):
-                pass
+            # All moves given a board state have been exhausted
+            if len(next_move) == 0:
+                self.undo_move(self.move_sequence.pop())
+
+            # The best move leads to nowhere
+            elif len(next_move) < 4:
+                self.undo_move(self.move_sequence.pop())
+                self.move(next_move[len(next_move) - 1][1])
+                self.move_sequence.append(next_move[len(next_move) - 1][1])
+
+            # The best move
             else:
-                return False
-        return True
+                self.move(next_move[len(next_move) - 1][1])
+                self.move_sequence.append(next_move[len(next_move) - 1][1])
 
     def move(self, input_str):
         """

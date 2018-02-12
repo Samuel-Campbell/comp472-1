@@ -31,11 +31,17 @@ def train():
     training_driver.run()
 
 
+def optimize():
+    training_driver.optimize()
+
+
 if __name__ == '__main__':
     command = sys.argv[1]
     if command == 'train':
         train()
     elif command == 'play':
         play()
+    elif command == 'optimize':
+        optimize()
     else:
         print('Argument {} not recognized'.format(command))

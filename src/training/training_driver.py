@@ -27,6 +27,17 @@ def __train_neural_network(binary_model, binary_name):
     nn.save(binary_name)
 
 
+def __evaluate(binary_model):
+    model = File.load_binary(binary_model)
+    nn = NeuralNetwork(model)
+    nn.evaluate_best_parameters()
+
+
+def optimize():
+    depth_first_search_driver.run_premade_boards('novice_data.bin', 'novice_model.bin', 10)
+    __train_neural_network('novice_data.bin', 'novice_model.bin')
+
+
 def run():
     max_steps = 10
     for i in range(5):
@@ -59,4 +70,3 @@ def run():
                                       1000, 'master_model.bin', max_steps)
         max_steps += int(max_steps * 0.2)
         __train_neural_network('master_data.bin', 'master_model.bin')
-

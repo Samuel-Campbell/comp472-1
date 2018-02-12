@@ -42,6 +42,46 @@ def run(difficulty, filename, nb_of_boards, prediction_model, maximum_steps=1):
             maximum_steps += 1
             print('Maximum steps increased to {}'.format(str(maximum_steps)))
     File.save_binary(filename, best_search_dict)
+
+
+def run_premade_boards(filename, prediction_model, maximum_steps=1):
+    """
+    1) Load data points
+    2) Load the ML model
+    3) perform DFS
+    4) if a search is successful then save it in the dictionary
+    5) once all points are collected then overwrite old model with new one
+
+    :param filename: Name of data point dictionary file
+    :param board_list: Number of random boards to generate
+    :param prediction_model: Prediction model to use (based on difficulty)
+    :param maximum_steps: Maximum amount of steps before failure
+    :return: None
+    """
+    data = File.load_binary(filename)
+    board_list = []
+    for key in data:
+        board_list.append(data[key][0])
+    prediction_model = File.load_binary(prediction_model)
+    DepthFirstSearch.clf = AbstractClassifier(None)
+    DepthFirstSearch.clf.model = prediction_model
+    print('Optimizing {} data points'.format(str(len(board_list))))
+    print('Max steps: {}'.format(str(maximum_steps)))
+    best_search_dict = data
+    for i in range(len(board_list)):
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(board_list[i])
+        dfs = DepthFirstSearch(board, max_iter=maximum_steps)
+        result = dfs.search()
+        if result:
+            __save_best_result(dfs.permutation, best_search_dict)
+            percent = (i / len(board_list)) * 100
+            stdout.write("\rProgress: %f " % percent)
+            stdout.flush()
+        else:
+            maximum_steps += 1
+            print('Maximum steps increased to {}'.format(str(maximum_steps)))
+    File.save_binary(filename, best_search_dict)
     return maximum_steps
 
 

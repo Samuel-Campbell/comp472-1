@@ -134,7 +134,15 @@ class GameBoard:
     
     def create_game_from_file(self, path):
         raise NotImplementedError
-    
+
+    def create_game_from_array(self, array):
+        top_row = array[:5]
+        middle_row = array[5:10]
+        bottom_row = array[-5:]
+        self.__board = numpy.array([top_row, middle_row, bottom_row])
+        self.__original_board = self.__board.copy()
+        self.__find_empty_cell()
+
     def __find_empty_cell(self):
         """
         Find where the empty cell is from the arrays.

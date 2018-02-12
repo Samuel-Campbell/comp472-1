@@ -28,34 +28,35 @@ def __train_neural_network(binary_model, binary_name):
 
 
 def run():
-    max_steps = 0
-    for i in range(5):        
-        print('Training Iteration: {}'.format(str(i)))
-        max_steps = depth_first_search_driver.run(GameDifficultyEnum.APPRENTICE,'apprentice_data.bin',
-                                      1000, 'apprentice_model.bin', max_steps)
-        max_steps += int(max_steps * 0.25)
-        __train_neural_network('apprentice_data.bin', 'apprentice_model.bin')
-
-    max_steps = 0
-    for i in range(15):
-        print('Training Iteration: {}'.format(str(i)))
-        max_steps = depth_first_search_driver.run(GameDifficultyEnum.EXPERT,'expert_data.bin',
-                                      100, 'expert_model.bin', max_steps)
-        max_steps += int(max_steps * 0.2)
-        __train_neural_network('expert_data.bin', 'expert_model.bin')
-
-    max_steps = 0
-    for i in range(20):
-        print('Training Iteration: {}'.format(str(i)))
-        max_steps = depth_first_search_driver.run(GameDifficultyEnum.MASTER,'master_data.bin',
-                                      200, 'master_model.bin', max_steps)
-        max_steps += int(max_steps * 0.1)
-        __train_neural_network('master_data.bin', 'master_model.bin')
-
-    max_steps = 0
-    for i in range(5):        
+    max_steps = 10
+    for i in range(5):
         print('Training Iteration: {}'.format(str(i)))
         max_steps = depth_first_search_driver.run(GameDifficultyEnum.NOVICE,'novice_data.bin',
                                       1000, 'novice_model.bin', max_steps)
-        max_steps += int(max_steps * 0.25)
+        max_steps += int(max_steps * 0.2)
         __train_neural_network('novice_data.bin', 'novice_model.bin')
+
+    max_steps = 15
+    for i in range(5):
+        print('Training Iteration: {}'.format(str(i)))
+        max_steps = depth_first_search_driver.run(GameDifficultyEnum.APPRENTICE,'apprentice_data.bin',
+                                      1000, 'apprentice_model.bin', max_steps)
+        max_steps += int(max_steps * 0.2)
+        __train_neural_network('apprentice_data.bin', 'apprentice_model.bin')
+
+    max_steps = 20
+    for i in range(5):
+        print('Training Iteration: {}'.format(str(i)))
+        max_steps = depth_first_search_driver.run(GameDifficultyEnum.EXPERT,'expert_data.bin',
+                                      1000, 'expert_model.bin', max_steps)
+        max_steps += int(max_steps * 0.2)
+        __train_neural_network('expert_data.bin', 'expert_model.bin')
+
+    max_steps = 25
+    for i in range(5):
+        print('Training Iteration: {}'.format(str(i)))
+        max_steps = depth_first_search_driver.run(GameDifficultyEnum.MASTER,'master_data.bin',
+                                      1000, 'master_model.bin', max_steps)
+        max_steps += int(max_steps * 0.2)
+        __train_neural_network('master_data.bin', 'master_model.bin')
+

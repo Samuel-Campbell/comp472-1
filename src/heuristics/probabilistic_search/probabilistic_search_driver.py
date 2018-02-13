@@ -18,7 +18,7 @@ if __name__ == '__main__':
     ProbabilisticSearch.clf = AbstractClassifier(None)
     ProbabilisticSearch.clf.model = prediction_model
     start = time.time()
-    for i in range(1):
+    for i in range(5):
         run(GameDifficultyEnum.NOVICE)
     end = time.time()
     print(end - start)

@@ -58,6 +58,7 @@ def run_premade_boards(filename, prediction_model, maximum_steps=1):
     :param maximum_steps: Maximum amount of steps before failure
     :return: None
     """
+    optimized_data = 0
     data = File.load_binary(filename)
     board_list = []
     for key in data:
@@ -69,18 +70,22 @@ def run_premade_boards(filename, prediction_model, maximum_steps=1):
     print('Max steps: {}'.format(str(maximum_steps)))
     best_search_dict = data
     for i in range(len(board_list)):
-        board = GameBoard(verbose=False)
-        board.create_game_from_array(board_list[i])
-        dfs = DepthFirstSearch(board, max_iter=maximum_steps)
-        result = dfs.search()
-        if result:
-            __save_best_result(dfs.permutation, best_search_dict)
-            percent = (i / len(board_list)) * 100
-            stdout.write("\rProgress: %f " % percent)
-            stdout.flush()
-        else:
-            maximum_steps += 1
-            print('Maximum steps increased to {}'.format(str(maximum_steps)))
+        steps = maximum_steps
+        while True:
+            board = GameBoard(verbose=False)
+            board.create_game_from_array(board_list[i])
+            dfs = DepthFirstSearch(board, max_iter=steps)
+            result = dfs.search()
+            if result:
+                optimized_data += __save_best_result(dfs.permutation, best_search_dict)
+                percent = (i / len(board_list)) * 100
+                stdout.write("\rProgress: %f " % percent)
+                stdout.flush()
+                break
+            else:
+                steps += 1
+
+    print('Data points optimized: {}'.format(str(optimized_data)))
     File.save_binary(filename, best_search_dict)
     return maximum_steps
 
@@ -97,11 +102,15 @@ def __save_best_result(permutation, best_search_dict):
     :param best_search_dict: dict
     :return: None
     """
+    sum = 0
     for result in permutation:
         key = str(result[0])
         if key in best_search_dict:
             current_val = best_search_dict[str(result[0])]
             if current_val[2] >= result[2]:
                 best_search_dict[str(result[0])] = result
+                if current_val[2] > result[2]:
+                    sum += 1
         else:
             best_search_dict[str(result[0])] = result
+    return sum

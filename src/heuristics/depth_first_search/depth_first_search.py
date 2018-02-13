@@ -51,20 +51,12 @@ class DepthFirstSearch:
         
         depth += 1
         probabilities = DepthFirstSearch.clf.predict_probabilities(game_state)
-        rnd = randint(1, 10)
-        if rnd == 1:
-            numpy.random.shuffle(probabilities)
-            first_best = probabilities.pop()[1]
-            second_best = probabilities.pop()[1]
-            third_best = probabilities.pop()[1]
-            fourth_best = probabilities.pop()[1]
 
-        else:
-            probabilities.sort(key=lambda x: x[0])
-            first_best = probabilities.pop()[1]
-            second_best = probabilities.pop()[1]
-            third_best = probabilities.pop()[1]
-            fourth_best = probabilities.pop()[1]
+        probabilities.sort(key=lambda x: x[0])
+        first_best = probabilities.pop()[1]
+        second_best = probabilities.pop()[1]
+        third_best = probabilities.pop()[1]
+        fourth_best = probabilities.pop()[1]
 
         self.move(first_best)
         if self.search(depth):

@@ -5,7 +5,6 @@ class ProbabilisticSearch:
         self.board_states = {}
         self.board = board
         self.move_sequence = []
-        self.mistakes = 0
 
     def next_move(self, game_state):
         if str(game_state) in self.board_states:

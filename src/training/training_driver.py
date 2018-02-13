@@ -34,7 +34,7 @@ def __evaluate(binary_model):
 
 
 def optimize():
-    depth_first_search_driver.run_premade_boards('novice_data.bin', 'novice_model.bin', 10)
+    depth_first_search_driver.run_premade_boards('novice_data.bin', 'novice_model.bin', 1)
     __train_neural_network('novice_data.bin', 'novice_model.bin')
 
 

@@ -21,7 +21,7 @@ class ManualGame(AbstractGame):
         while not self._board.game_cleared():
             while True:
                 self._board.display()
-                input_str = input('\nEnter you next move. (u, r, d, l)')
+                input_str = input('\nEnter you next move. (w (up), d (right), s (down), a (left)')
                 if ManualGame.__validate_input(input_str):
                     self._move(input_str)
                     break

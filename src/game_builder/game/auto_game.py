@@ -7,10 +7,10 @@ from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 class AutoGame(AbstractGame):
     move_to_int = {
-        0: 'u',
-        1: 'd',
-        2: 'r',
-        3: 'l'
+        0: 'w',
+        1: 's',
+        2: 'd',
+        3: 'a'
     }
 
     def __init__(self, board):

@@ -14,8 +14,6 @@ class GameBoard:
     }
 
     def __init__(self, verbose=True):
-        self.__original_board = None
-        self.__original_empty_cell = (0, 0)
         self.__board = None
         self.__empty_cell = (0, 0)
         self.__verbose = verbose
@@ -129,7 +127,6 @@ class GameBoard:
         middle_row = board[5:10]
         bottom_row = board[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
-        self.__original_board = self.__board.copy()
         self.__find_empty_cell()
     
     def create_game_from_file(self, path):
@@ -140,7 +137,6 @@ class GameBoard:
         middle_row = array[5:10]
         bottom_row = array[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
-        self.__original_board = self.__board.copy()
         self.__find_empty_cell()
 
     def __find_empty_cell(self):
@@ -156,7 +152,6 @@ class GameBoard:
             for j in range(len(self.__board[i])):
                 if self.__board[i, j] == 0:
                     self.__empty_cell = (j, i)
-                    self.__original_empty_cell = (j, i)
 
     def display(self):
         """
@@ -189,11 +184,3 @@ class GameBoard:
         """
         board = self.__board.copy()
         return numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
-
-    def reset_board(self):
-        """
-        resets board to original state
-        :return: None
-        """
-        self.__board = self.__original_board.copy()
-        self.__empty_cell = self.__original_empty_cell[0], self.__original_empty_cell[1]

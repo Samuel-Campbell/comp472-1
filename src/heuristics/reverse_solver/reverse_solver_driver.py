@@ -34,8 +34,6 @@ def __save_best_result(solutions, best_search_dict):
     for key in solutions:
         value = solutions[key]
         if key in best_search_dict:
-            current_val = best_search_dict[key]
-            if current_val[2] >= value[2]:
-                best_search_dict[key] = value[2]
-        else:
+            pass
+        elif not(value == ''):
             best_search_dict[key] = value

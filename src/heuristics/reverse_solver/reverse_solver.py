@@ -16,6 +16,13 @@ class ReverseSolver:
         3: 'l'
     }
 
+    reverse_int_to_move ={
+        0: 'd',
+        1: 'u',
+        2: 'l',
+        3: 'r'
+    }
+
     def __init__(self, max_iter):
         self.board = GameBoard(verbose=False)
         self.max_iter = max_iter
@@ -41,28 +48,60 @@ class ReverseSolver:
         numpy.random.shuffle(moves)
 
         self.move(ReverseSolver.int_to_move[moves[0]])
+        game_state = self.board.get_board_state()
         if self.solve(depth):
-            self.solutions[str(game_state)] = [game_state, ReverseSolver.int_to_move[moves[0]], depth - 1]
+            self.solutions[str(game_state)] = [
+                ReverseSolver.position_difference(game_state),
+                ReverseSolver.incorrect_positions(game_state),
+                ReverseSolver.reverse_int_to_move[moves[0]],
+                depth
+            ]
             return True
         self.undo_move(ReverseSolver.int_to_move[moves[0]])
 
         self.move(ReverseSolver.int_to_move[moves[1]])
+        game_state = self.board.get_board_state()
         if self.solve(depth):
-            self.solutions[str(game_state)] = [game_state, ReverseSolver.int_to_move[moves[1]], depth - 1]
+            self.solutions[str(game_state)] = [
+                ReverseSolver.position_difference(game_state),
+                ReverseSolver.incorrect_positions(game_state),
+                ReverseSolver.reverse_int_to_move[moves[1]],
+                depth
+            ]
             return True
         self.undo_move(ReverseSolver.int_to_move[moves[1]])
 
         self.move(ReverseSolver.int_to_move[moves[2]])
+        game_state = self.board.get_board_state()
         if self.solve(depth):
-            self.solutions[str(game_state)] = [game_state, ReverseSolver.int_to_move[moves[2]], depth - 1]
+            self.solutions[str(game_state)] = [
+                ReverseSolver.position_difference(game_state),
+                ReverseSolver.incorrect_positions(game_state),
+                ReverseSolver.reverse_int_to_move[moves[2]],
+                depth
+            ]
             return True
         self.undo_move(ReverseSolver.int_to_move[moves[2]])
 
         self.move(ReverseSolver.int_to_move[moves[3]])
+        game_state = self.board.get_board_state()
         if self.solve(depth):
-            self.solutions[str(game_state)] = [game_state, ReverseSolver.int_to_move[moves[3]], depth - 1]
+            self.solutions[str(game_state)] = [
+                ReverseSolver.position_difference(game_state),
+                ReverseSolver.incorrect_positions(game_state),
+                ReverseSolver.reverse_int_to_move[moves[3]],
+                depth
+            ]
             return True
         self.undo_move(ReverseSolver.int_to_move[moves[3]])
+
+    @staticmethod
+    def incorrect_positions(game_state):
+        return numpy.sum(numpy.array(game_state) != numpy.array(ReverseSolver.novice_goal_state))
+
+    @staticmethod
+    def position_difference(game_state):
+        return numpy.subtract(numpy.array(game_state), numpy.array(ReverseSolver.novice_goal_state))
 
     def move(self, input_str):
         """

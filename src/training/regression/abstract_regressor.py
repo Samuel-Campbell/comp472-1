@@ -2,7 +2,7 @@ import numpy as np
 from util.file import File
 
 
-class AbstractClassifier:
+class AbstractRegressor:
 
     int_to_move = {
         0: 'u',
@@ -70,7 +70,7 @@ class AbstractClassifier:
             lst = list(self.dataset[permutation][0])
             lst.append(self.dataset[permutation][1])
             x_total.append(np.array(lst))
-            y_total.append(self.dataset[permutation][2])
+            y_total.append(self.dataset[permutation][3])
         x_total = np.array(x_total)
         y_total = np.array(y_total)
         return x_total , y_total

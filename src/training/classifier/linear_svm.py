@@ -1,6 +1,7 @@
 from sklearn import svm
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.preprocessing import StandardScaler
 import numpy as np
 from util.file import File
 from training.classifier.abstract_classifier import AbstractClassifier
@@ -14,9 +15,11 @@ class LinearSVM(AbstractClassifier):
         """
         Trains the Linear Support Vector Machine.
         """
-        (x_total, y_total) = self.reshape_dataset()
+        x_total, y_total = self.reshape_dataset()
+        scaler = StandardScaler()
+        x_total = scaler.fit_transform(x_total)
         x_train, x_test, y_train, y_test = train_test_split(
-            x_total, y_total, test_size=0.20, random_state=42)
+            x_total[:20000], y_total[:20000], test_size=0.20, random_state=42)
         print("Sample size: {}".format(len(x_total)))
         print("Train size: {}".format(len(x_train)))
         print("Test size: {}".format(len(x_test)))

@@ -1,4 +1,8 @@
+import numpy
+
+
 class ProbabilisticSearch:
+    novice_goal_state = [1, 2, 2, 1, 1, 0, 3, 2, 3, 2, 1, 2, 2, 1, 1]
     clf = None
 
     def __init__(self, board):
@@ -13,7 +17,8 @@ class ProbabilisticSearch:
             except IndexError:
                 pass
         else:
-            move_prob = ProbabilisticSearch.clf.predict_probabilities(game_state)
+            sub_arr = numpy.subtract(numpy.array(game_state), numpy.array(ProbabilisticSearch.novice_goal_state))
+            move_prob = ProbabilisticSearch.clf.predict_probabilities(sub_arr)
             move_prob.sort(key=lambda x: x[0])
             self.board_states[str(game_state)] = move_prob
         return self.board_states[str(game_state)]

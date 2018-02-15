@@ -1,6 +1,7 @@
 from game_builder.board.game_board import GameBoard, GameDifficultyEnum
 from random import randint
 import numpy
+from scipy.spatial import distance
 
 
 class ReverseSolver:
@@ -50,8 +51,10 @@ class ReverseSolver:
         self.move(ReverseSolver.int_to_move[moves[0]])
         game_state = self.board.get_board_state()
         if self.solve(depth):
+            diff, dist = ReverseSolver.position_difference(game_state)
             self.solutions[str(game_state)] = [
-                ReverseSolver.position_difference(game_state),
+                diff,
+                dist,
                 ReverseSolver.incorrect_positions(game_state),
                 ReverseSolver.reverse_int_to_move[moves[0]],
                 depth
@@ -62,8 +65,10 @@ class ReverseSolver:
         self.move(ReverseSolver.int_to_move[moves[1]])
         game_state = self.board.get_board_state()
         if self.solve(depth):
+            diff, dist = ReverseSolver.position_difference(game_state)
             self.solutions[str(game_state)] = [
-                ReverseSolver.position_difference(game_state),
+                diff,
+                dist,
                 ReverseSolver.incorrect_positions(game_state),
                 ReverseSolver.reverse_int_to_move[moves[1]],
                 depth
@@ -74,8 +79,10 @@ class ReverseSolver:
         self.move(ReverseSolver.int_to_move[moves[2]])
         game_state = self.board.get_board_state()
         if self.solve(depth):
+            diff, dist = ReverseSolver.position_difference(game_state)
             self.solutions[str(game_state)] = [
-                ReverseSolver.position_difference(game_state),
+                diff,
+                dist,
                 ReverseSolver.incorrect_positions(game_state),
                 ReverseSolver.reverse_int_to_move[moves[2]],
                 depth
@@ -86,8 +93,10 @@ class ReverseSolver:
         self.move(ReverseSolver.int_to_move[moves[3]])
         game_state = self.board.get_board_state()
         if self.solve(depth):
+            diff, dist = ReverseSolver.position_difference(game_state)
             self.solutions[str(game_state)] = [
-                ReverseSolver.position_difference(game_state),
+                diff,
+                dist,
                 ReverseSolver.incorrect_positions(game_state),
                 ReverseSolver.reverse_int_to_move[moves[3]],
                 depth
@@ -101,7 +110,27 @@ class ReverseSolver:
 
     @staticmethod
     def position_difference(game_state):
-        return numpy.subtract(numpy.array(game_state), numpy.array(ReverseSolver.novice_goal_state))
+        sub_arr = numpy.subtract(numpy.array(game_state), numpy.array(ReverseSolver.novice_goal_state))
+        sum = 0
+        start = []
+        calculating_dist = False
+        dist = 0
+        for i in range(len(sub_arr)):
+            a = sub_arr[i]
+            sum += sub_arr[i]
+            if (sum != 0) and not(calculating_dist):
+                start = [int(i / 5),  i % 5]
+                calculating_dist = True
+
+            elif (sum != 0) and (sub_arr[i] != 0):
+                end = [int(i / 5), i % 5]
+                dist += distance.euclidean(start, end)
+
+            elif (sum == 0) and calculating_dist:
+                end = [int(i / 5), i % 5]
+                dist += distance.euclidean(start, end)
+                calculating_dist = False
+        return sub_arr, dist
 
     def move(self, input_str):
         """

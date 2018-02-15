@@ -1,10 +1,11 @@
 from training.classifier.linear_svm import LinearSVM
 from training.classifier.naive_bayes import NaiveBayes
-from training.regression.neural_network import NeuralNetwork
+from training.classifier.neural_network import NeuralNetwork
 # from training.regression.deep_learning import DeepLearner
 from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 from heuristics.reverse_solver import reverse_solver_driver
 from util.file import File
+import numpy
 
 
 def __train_svm(binary_model, binary_name):
@@ -41,9 +42,5 @@ def __evaluate(binary_model):
 
 
 def run():
-    steps = 5
-    while steps <= 200:
-        reverse_solver_driver.run('novice_data.bin', steps, GameDifficultyEnum.NOVICE, 1000)
-        __train_neural_network('novice_data.bin', 'novice_model.bin')
-        steps += 10
-    #__evaluate('novice_data.bin')
+    reverse_solver_driver.run('novice_data.bin', 100, GameDifficultyEnum.NOVICE, 100)
+    __train_neural_network('novice_data.bin', 'novice_model.bin')

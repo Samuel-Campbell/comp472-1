@@ -18,3 +18,8 @@ class TestReverseSolver(unittest.TestCase):
 
         board.create_game_from_array(ReverseSolver.master_goal_state)
         self.assertTrue(board.game_cleared())
+
+        rs = ReverseSolver(22)
+        org = [1, 2, 2, 1, 1, 0, 3, 2, 3, 2, 1, 2, 2, 1, 1]
+        arr = [3, 1, 2, 1, 1, 0, 2, 2, 2, 3, 1, 2, 2, 1, 1]
+        print(rs.position_difference(arr))

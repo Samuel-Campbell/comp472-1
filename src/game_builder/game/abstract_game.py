@@ -2,10 +2,10 @@ import numpy
 
 
 class CommandEnum:
-    UP = 'u'
-    RIGHT = 'r'
-    DOWN = 'd'
-    LEFT = 'l'
+    UP = 'w'
+    RIGHT = 's'
+    DOWN = 's'
+    LEFT = 'a'
     MOVES = [UP, RIGHT, DOWN, LEFT]
 
 
@@ -19,10 +19,10 @@ class AbstractGame:
     def _move(self, input_str):
         """
         Moves the empty cell up, left, down, or right based on input_str
-        UP: 'u'
-        DOWN: 'd'
-        LEFT: 'l'
-        RIGHT: 'r'
+        UP: 'w'
+        DOWN: 's'
+        LEFT: 'a'
+        RIGHT: 'd'
 
         :param input_str: string
         :return: None

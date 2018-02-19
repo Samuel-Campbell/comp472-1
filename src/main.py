@@ -19,7 +19,7 @@ def play():
         game = GameBuilder.build()
         print('------------------------------------------------')
         game.run()
-        input_str = input('Do you want to keep playing? (y/Y)')
+        input_str = input('Do you want to keep playing? (y/n)')
         if input_str.lower() == 'y':
             pass
         else:

@@ -18,6 +18,7 @@ class GameBoard:
         self.__empty_cell = (0, 0)
         self.__verbose = verbose
         self.difficulty = None
+        self.candy_count = None
 
     def move_right(self):
         """
@@ -112,15 +113,20 @@ class GameBoard:
         board_list = []
         if game_difficulty == GameDifficultyEnum.NOVICE:
             board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3]
+            self.candy_count = numpy.array([1, 6, 6, 2, 0, 0, 0])
 
         elif game_difficulty == GameDifficultyEnum.APPRENTICE:
             board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4]
+            self.candy_count = numpy.array([1, 6, 4, 2, 2, 0, 0])
 
         elif game_difficulty == GameDifficultyEnum.EXPERT:
             board_list = [0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5]
+            self.candy_count = numpy.array([1, 4, 4, 2, 2, 2, 0])
 
         elif game_difficulty == GameDifficultyEnum.MASTER:
             board_list = [0, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
+            self.candy_count = numpy.array([1, 4, 2, 2, 2, 2, 2])
+
         board = numpy.array(board_list)
         numpy.random.shuffle(board)
         top_row = board[:5]
@@ -138,6 +144,10 @@ class GameBoard:
         bottom_row = array[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
         self.__find_empty_cell()
+        self.candy_count = numpy.array([0, 0, 0, 0, 0, 0, 0])
+        for row in self.__board:
+            for column in row:
+                self.candy_count[column] += 1
 
     def __find_empty_cell(self):
         """
@@ -184,3 +194,17 @@ class GameBoard:
         """
         board = self.__board.copy()
         return numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
+
+    def top_row_solved(self):
+        top_row_count = numpy.array([0, 0, 0, 0, 0, 0, 0])
+        for candy in self.__board[0]:
+            top_row_count[candy] += 1
+        mid_bot_row_count = numpy.subtract(self.candy_count, top_row_count)
+        diff = numpy.subtract(mid_bot_row_count, top_row_count)
+        index = [i for i, j in enumerate(diff) if j < 0]
+        if len(index) > 0:
+            return False, index
+        return True, index
+
+    def get_coordinates(self):
+        return self.__empty_cell

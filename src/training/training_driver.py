@@ -3,7 +3,6 @@ from training.classifier.naive_bayes import NaiveBayes
 from training.classifier.neural_network import NeuralNetwork
 # from training.regression.deep_learning import DeepLearner
 from game_builder.difficulty.game_difficulty import GameDifficultyEnum
-from heuristics.reverse_solver import reverse_solver_driver
 from util.file import File
 import numpy
 
@@ -42,5 +41,4 @@ def __evaluate(binary_model):
 
 
 def run():
-    reverse_solver_driver.run('novice_data.bin', 100, GameDifficultyEnum.NOVICE, 100)
-    __train_neural_network('novice_data.bin', 'novice_model.bin')
+    pass

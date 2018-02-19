@@ -1,9 +1,10 @@
 from training.classifier.linear_svm import LinearSVM
 from training.classifier.naive_bayes import NaiveBayes
-from training.regression.neural_network import NeuralNetwork
+from training.classifier.neural_network import NeuralNetwork
 # from training.regression.deep_learning import DeepLearner
 from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 from util.file import File
+import numpy
 
 
 def __train_svm(binary_model, binary_name):

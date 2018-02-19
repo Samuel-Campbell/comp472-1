@@ -22,7 +22,7 @@ class NeuralNetwork(AbstractClassifier):
         print("Test size: {}".format(len(x_test)))
 
         print("Training Classifier using Neural Networks")
-        clf = MLPClassifier(max_iter=1000, hidden_layer_sizes=(37,16,10))
+        clf = MLPClassifier(max_iter=1000, solver='lbfgs')
         self.model = clf.fit(x_train, y_train)
         self.test(x_test, y_test)
 
@@ -46,14 +46,12 @@ class NeuralNetwork(AbstractClassifier):
                  combination
         """
         x_total, y_total = self.reshape_dataset()
-        x_total = x_total[:4000]
-        y_total = y_total[:4000]
 
         parameters = {
-            'hidden_layer_sizes': ((37,16), (37,16,10)),
+            'solver': ('lbfgs', 'sgd', 'adam'),
         }
 
-        nn = MLPClassifier(max_iter=1000, hidden_layer_sizes=(37,16,10))
+        nn = MLPClassifier(max_iter=1000)
         clf = GridSearchCV(nn, parameters)
         clf.fit(x_total, y_total)
         print(clf.best_params_)

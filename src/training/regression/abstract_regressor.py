@@ -69,8 +69,9 @@ class AbstractRegressor:
         for permutation in self.dataset:
             lst = list(self.dataset[permutation][0])
             lst.append(self.dataset[permutation][1])
+            lst.append(self.dataset[permutation][2])
             x_total.append(np.array(lst))
-            y_total.append(self.dataset[permutation][3])
+            y_total.append(self.dataset[permutation][4])
         x_total = np.array(x_total)
         y_total = np.array(y_total)
         return x_total , y_total

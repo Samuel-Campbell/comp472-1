@@ -46,7 +46,6 @@ class GameMode:
             GameMode.__play_mode = PlayModeEnum.MANUAL
             return True
         elif input_str.lower() == PlayModeEnum.AUTO:
-            print('Game mode not yet supported.')
-            return False
+            return True
         print('Your input is incorrect.')
         return False

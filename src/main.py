@@ -19,7 +19,7 @@ def play():
         game = GameBuilder.build()
         print('------------------------------------------------')
         game.run()
-        input_str = input('Do you want to keep playing? (y/Y)')
+        input_str = input('Do you want to keep playing? (y/n)')
         if input_str.lower() == 'y':
             pass
         else:
@@ -31,17 +31,11 @@ def train():
     training_driver.run()
 
 
-def optimize():
-    training_driver.optimize()
-
-
 if __name__ == '__main__':
     command = sys.argv[1]
     if command == 'train':
         train()
     elif command == 'play':
         play()
-    elif command == 'optimize':
-        optimize()
     else:
         print('Argument {} not recognized'.format(command))

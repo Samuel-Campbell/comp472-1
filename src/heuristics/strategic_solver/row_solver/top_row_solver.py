@@ -1,4 +1,5 @@
 from game_builder.game.abstract_game import CommandEnum
+from heuristics.strategic_solver.row_solver.abstract_row_solver import AbstractRowSolver
 
 
 class TopAlgorithm:
@@ -62,13 +63,12 @@ class TopAlgorithm:
         pass
 
 
-class TopRowSolver:
-    def __init__(self, board):
-        self.board = board
-        self.state = {}
+class TopRowSolver(AbstractRowSolver):
+    def __init__(self, board, verbose=False, output=False):
+        AbstractRowSolver.__init__(self, board, verbose, output)
 
     def solve(self):
-        self.__go_left_center()
+        self._go_left_center()
         direction = 'r'
         i = 0
         while True:
@@ -95,10 +95,10 @@ class TopRowSolver:
 
             if direction == 'r':
                 i += 1
-                self.__move(CommandEnum.RIGHT)
+                self._move(CommandEnum.RIGHT)
             else:
                 i -= 1
-                self.__move(CommandEnum.LEFT)
+                self._move(CommandEnum.LEFT)
 
     def __find_and_replace(self, down, left, right, ignore):
         algorithm = []
@@ -111,28 +111,5 @@ class TopRowSolver:
         elif (left is not None) and (down not in ignore):
             algorithm = TopAlgorithm.bottom_to_top_has_left
         for move in algorithm:
-            self.__move(move)
+            self._move(move)
 
-    def __go_left_center(self):
-        x, y = self.board.get_coordinates()
-        for i in range(x):
-            self.__move(CommandEnum.LEFT)
-        if y == 2:
-            self.__move(CommandEnum.UP)
-        elif y == 0:
-            self.__move(CommandEnum.DOWN)
-
-    def __move(self, input_str):
-        """
-        move
-        :param input_str: string
-        :return: None
-        """
-        if input_str == CommandEnum.UP:
-            self.board.move_up()
-        elif input_str == CommandEnum.DOWN:
-            self.board.move_down()
-        elif input_str == CommandEnum.LEFT:
-            self.board.move_left()
-        elif input_str == CommandEnum.RIGHT:
-            self.board.move_right()

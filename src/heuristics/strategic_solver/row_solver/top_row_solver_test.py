@@ -1,8 +1,10 @@
-import unittest
-from heuristics.strategic_solver.top_row_solver import TopRowSolver
-from game_builder.board.game_board import GameBoard
-import numpy
 import time
+import unittest
+
+import numpy
+
+from game_builder.board.game_board import GameBoard
+from heuristics.strategic_solver.row_solver.top_row_solver import TopRowSolver
 
 
 class TestTopRowSolver(unittest.TestCase):

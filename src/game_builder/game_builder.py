@@ -27,8 +27,6 @@ class GameBuilder:
             board.create_random_game(difficulty)
             return ManualGame(board)
         else:
-            # Use multi threading in the future here.
-            # 1 per processor so that ML can solve multiple boards
             board = GameBoard()
-            board = board.create_game_from_file(None)
+            board.create_random_game(difficulty)
             return AutoGame(board)

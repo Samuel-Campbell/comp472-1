@@ -9,6 +9,11 @@ class StrategicSolver:
         self.nb_moves = 0
 
     def solve(self):
+        """
+        1) solve top row
+        2) solve bottom row
+        :return: None
+        """
         ts = TopRowSolver(self.board, verbose=self.verbose)
         ts.solve()
         self.nb_moves += ts.nb_moves

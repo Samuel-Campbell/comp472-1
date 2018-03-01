@@ -3,7 +3,7 @@ import numpy
 
 class CommandEnum:
     UP = 'w'
-    RIGHT = 's'
+    RIGHT = 'd'
     DOWN = 's'
     LEFT = 'a'
     MOVES = [UP, RIGHT, DOWN, LEFT]

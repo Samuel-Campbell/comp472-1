@@ -1,5 +1,5 @@
 import os
-from assignment_2.classifier.naive_bayes import NaiveBayes
+from classifier.naive_bayes import NaiveBayes
 
 
 def __parse_set(filename):

@@ -4,13 +4,23 @@ from game_builder.difficulty.game_difficulty import GameDifficultyEnum
 
 class GameBoard:
     int_to_candy = {
-        0: ' ',
+        0: 'e',
         1: 'r',
         2: 'b',
         3: 'w',
         4: 'y',
         5: 'g',
         6: 'p'
+    }
+
+    candy_to_int = {
+        'e': 0,
+        'r': 1,
+        'b': 2,
+        'w': 3,
+        'y': 4,
+        'g': 5,
+        'p': 6
     }
 
     def __init__(self, verbose=True):
@@ -134,9 +144,18 @@ class GameBoard:
         bottom_row = board[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
         self.__find_empty_cell()
-    
-    def create_game_from_file(self, path):
-        raise NotImplementedError
+
+    @staticmethod
+    def obtain_game_from_file(path):
+        file = open(path, 'r')
+        games_list = []
+        for lines in file:
+            lines = lines.replace('\n', '')
+            line = lines.split(' ')
+            line = [GameBoard.candy_to_int[x] for x in line]
+            games_list.append(line)
+        file.close()
+        return games_list
 
     def create_game_from_array(self, array):
         top_row = array[:5]

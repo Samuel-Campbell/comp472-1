@@ -9,4 +9,3 @@ class AutoGame(AbstractGame):
     def run(self):
         ss = StrategicSolver(self._board, verbose=True)
         ss.solve()
-        print('Game Cleared Automatically in {} steps'.format(ss.nb_moves))

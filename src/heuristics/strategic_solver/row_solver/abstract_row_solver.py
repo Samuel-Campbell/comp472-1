@@ -29,13 +29,14 @@ class AbstractRowSolver:
         """
         if input_str == CommandEnum.UP:
             self.board.move_up()
+            self.move.append('u')
         elif input_str == CommandEnum.DOWN:
             self.board.move_down()
+            self.move.append('d')
         elif input_str == CommandEnum.LEFT:
             self.board.move_left()
+            self.move.append('l')
         elif input_str == CommandEnum.RIGHT:
             self.board.move_right()
+            self.move.append('r')
         self.nb_moves += 1
-        if self.verbose:
-            self.board.display()
-            time.sleep(0.2)

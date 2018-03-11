@@ -15,15 +15,7 @@ def play():
     print('================================================')
     print('Welcome to Candy Crisis')
     print('================================================')
-    while True:
-        game = GameBuilder.build()
-        print('------------------------------------------------')
-        game.run()
-        input_str = input('Do you want to keep playing? (y/n)')
-        if input_str.lower() == 'y':
-            pass
-        else:
-            break
+    GameBuilder.build()
     print('Thanks for playing')
 
 

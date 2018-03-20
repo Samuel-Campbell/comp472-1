@@ -227,3 +227,23 @@ class GameBoard:
 
     def get_coordinates(self):
         return self.__empty_cell
+
+    def copy(self):
+        board = self.__board.copy()
+        array = numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(array)
+        return board
+
+    def pattern_solved(self):
+        index0 = [i for i, j in enumerate(self.__board[0]) if j == 1]
+        index1 = [i for i, j in enumerate(self.__board[1]) if j == 2]
+        index2 = [i for i, j in enumerate(self.__board[2]) if j == 1]
+        if len(index0) == 0:
+            return False
+        elif len(index2) == 0:
+            return False
+        elif len(index1) > 0:
+            return False
+        return index0 == index2
+

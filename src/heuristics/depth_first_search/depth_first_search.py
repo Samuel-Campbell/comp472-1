@@ -59,19 +59,21 @@ if __name__ == '__main__':
     pattern_dictionary = File.load_binary('pattern_dictionary.bin')
     i = 0
     for key in pattern_dictionary:
-        percent = (i / len(pattern_dictionary)) * 100
-        stdout.write("\rProgress: %f " % percent)
+        percent = i / len(pattern_dictionary) * 100
+        stdout.write("\rProgress: {}".format(percent))
         stdout.flush()
-        max_iter = 1
+        max_iter = pattern_dictionary[key]['steps']
         while True:
+            if max_iter == 0:
+                break
             board = GameBoard(verbose=False)
             board.create_game_from_array(pattern_dictionary[key]['array'])
             dfs = DepthFirstSearch(board, max_iter)
             result = dfs.search()
-
             if result:
                 pattern_dictionary[key]['steps'] = dfs.steps
-                pattern_dictionary[key]['moves'] = dfs.move_sequence.reverse()
+                dfs.move_sequence.reverse()
+                pattern_dictionary[key]['moves'] = dfs.move_sequence
                 break
             max_iter += 1
         i += 1

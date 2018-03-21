@@ -1,6 +1,7 @@
 from itertools import permutations
 from util.file import File
 from sys import stdout
+from game_builder.board.game_board import GameBoard
 
 
 class PatternDatabase:
@@ -37,6 +38,8 @@ class PatternDatabase:
                 dictionary[str(list(triple_row_pattern[i]))] = list(triple_row_pattern[i])
 
     def merge_patterns(self, solved_dictionary, unsolved_dictionary):
+        zero_error = 0
+        intersection_error = 0
         x = 0
         for pattern_1 in unsolved_dictionary:
             percent = (x / len(unsolved_dictionary)) * 100
@@ -60,10 +63,11 @@ class PatternDatabase:
 
                 # find collision between solved and unsolved
                 ones = set([i for i, j in enumerate(array_1) if j == 1])
-                twos = set([i for i, j in enumerate(array_2) if j == 2])
+                twos = set([i for i, j in enumerate(array_2) if j >= 2])
                 intersection = ones.intersection(twos)
 
                 if len(intersection) > 0:
+                    intersection_error += 1
                     continue
 
                 # make sure zeros are at the same index
@@ -71,13 +75,14 @@ class PatternDatabase:
                 zero_2 = [i for i, j in enumerate(array_2) if j == 0]
 
                 if not(zero_1 == zero_2):
+                    zero_error += 1
                     continue
 
                 # merge arrays
                 final_board = []
                 for i in range(len(array_1)):
-                    if array_2[i] == 2:
-                        final_board.append(2)
+                    if array_2[i] >= 2:
+                        final_board.append(array_2[i])
                     else:
                         final_board.append(array_1[i])
 
@@ -88,15 +93,56 @@ class PatternDatabase:
                     'final_mapping': -1
                 }
             x += 1
+        print('intersection error {}'.format(intersection_error))
+        print('zero error {}'.format(zero_error))
+        self.format_dictionary()
+
+    def format_dictionary(self):
+        for key in self.pattern_dictionary:
+            array = self.pattern_dictionary[key]['array']
+            pair = 2
+            for i in range(5):
+                if array[i] == 2:
+                    array[i] = pair
+                    array[i + 10] = pair
+                    pair += 1
+            self.pattern_dictionary[key]['array'] = array
 
     def save_patterns(self):
         print('{} patterns'.format(len(self.pattern_dictionary)))
         File.save_binary('pattern_dictionary.bin', self.pattern_dictionary)
 
+    def create_mapping(self):
+        pattern_dictionary = File.load_binary('pattern_dictionary.bin')
+        for key in pattern_dictionary:
+            initial_mapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+            array = pattern_dictionary[key]['array']
+            current_position =  [i for i, j in enumerate(array) if j == 0]
+            movements = pattern_dictionary[key]['moves']
+            if movements is None or movements == -1:
+                pattern_dictionary[key]['final_mapping'] = None
+                continue
+            board = GameBoard(verbose=False)
+            board.create_game_with_mapping(initial_mapping, current_position[0])
+            for move in movements:
+                if move == 'r':
+                    board.move_right()
+                elif move == 'l':
+                    board.move_left()
+                elif move == 'd':
+                    board.move_down()
+                elif move == 'u':
+                    board.move_up()
+            pattern_dictionary[key]['final_mapping'] = board.get_board_state()
+        File.save_binary('pattern_dictionary.bin', pattern_dictionary)
+
 
 if __name__ == '__main__':
     pd = PatternDatabase()
-    pd.find_patterns()
-    pd.save_patterns()
+    d = File.load_binary('pattern_dictionary.bin')
+    for k in d:
+        print(d[k])
+
+
 
 

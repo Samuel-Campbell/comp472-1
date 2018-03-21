@@ -1,5 +1,4 @@
 from game_builder.game_builder import GameBuilder
-import sys
 
 
 def play():
@@ -19,8 +18,4 @@ def play():
 
 
 if __name__ == '__main__':
-    command = sys.argv[1]
-    if command == 'play':
-        play()
-    else:
-        print('Argument {} not recognized'.format(command))
+    play()

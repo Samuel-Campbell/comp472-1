@@ -168,7 +168,14 @@ class GameBoard:
             for column in row:
                 self.candy_count[column] += 1
 
-    def __find_empty_cell(self):
+    def create_game_with_mapping(self, array, value):
+        top_row = array[:5]
+        middle_row = array[5:10]
+        bottom_row = array[-5:]
+        self.__board = numpy.array([top_row, middle_row, bottom_row])
+        self.__find_empty_cell(value)
+
+    def __find_empty_cell(self, value = 0):
         """
         Find where the empty cell is from the arrays.
         This is mandatory to know where the player is situated and whether a move is
@@ -179,7 +186,7 @@ class GameBoard:
 
         for i in range(len(self.__board)):
             for j in range(len(self.__board[i])):
-                if self.__board[i, j] == 0:
+                if self.__board[i, j] == value:
                     self.__empty_cell = (j, i)
 
     def display(self):
@@ -227,3 +234,23 @@ class GameBoard:
 
     def get_coordinates(self):
         return self.__empty_cell
+
+    def copy(self):
+        board = self.__board.copy()
+        array = numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(array)
+        return board
+
+    def pattern_solved(self):
+        index0 = [i for i, j in enumerate(self.__board[0]) if j >= 1]
+        index1 = [i for i, j in enumerate(self.__board[1]) if j >= 1]
+        index2 = [i for i, j in enumerate(self.__board[2]) if j >= 1]
+        if len(index0) == 0:
+            return False
+        elif len(index2) == 0:
+            return False
+        elif len(index1) > 0:
+            return False
+        return index0 == index2
+

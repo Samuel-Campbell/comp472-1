@@ -68,6 +68,9 @@ class TopRowSolver(AbstractRowSolver):
         AbstractRowSolver.__init__(self, board, verbose, output)
 
     def solve(self):
+        solved, resolve = self.board.top_row_solved()
+        if solved:
+            return
         self._go_left_center()
         direction = 'r'
         i = 0

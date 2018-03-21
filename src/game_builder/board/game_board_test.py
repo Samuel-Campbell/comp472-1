@@ -54,3 +54,29 @@ class TestGameBoard(unittest.TestCase):
         x, y = board.get_coordinates()
         self.assertEqual(x, 3)
         self.assertEqual(y, 2)
+
+    def test_pattern_solved(self):
+        arr = numpy.array([
+            -1, -1, -1, -1, -1,
+            1, 1, 0, -1, -1,
+            -1, -1, -1, -1, -1
+        ])
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(arr)
+        self.assertFalse(board.pattern_solved())
+
+        arr = numpy.array([
+            -1, -1, -1, 1, -1,
+            -1, -1, 0, -1, -1,
+            -1, -1, -1, 1, -1
+        ])
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(arr)
+        self.assertTrue(board.pattern_solved())
+
+        arr = [-1, -1, -1, -1, -1,
+               1, 1, 0, -1, -1,
+               -1, -1, -1, -1, -1]
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(arr)
+        self.assertFalse(board.pattern_solved())

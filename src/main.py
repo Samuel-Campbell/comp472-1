@@ -1,6 +1,4 @@
 from game_builder.game_builder import GameBuilder
-from training import training_driver
-import sys
 
 
 def play():
@@ -19,15 +17,5 @@ def play():
     print('Thanks for playing')
 
 
-def train():
-    training_driver.run()
-
-
 if __name__ == '__main__':
-    command = sys.argv[1]
-    if command == 'train':
-        train()
-    elif command == 'play':
-        play()
-    else:
-        print('Argument {} not recognized'.format(command))
+    play()

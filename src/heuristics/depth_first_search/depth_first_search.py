@@ -77,7 +77,7 @@ if __name__ == '__main__':
                     pattern_dictionary[key]['moves'] = dfs.move_sequence
                     if percent >= t:
                         t = int(percent) + 1
-                        File.save_binary('pattern_dictionary,bin', pattern_dictionary)
+                        File.save_binary('pattern_dictionary.bin', pattern_dictionary)
                     break
                 if max_iter >= 20:
                     unsolved += 1

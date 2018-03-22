@@ -140,8 +140,11 @@ class PatternDatabase:
 if __name__ == '__main__':
     pd = PatternDatabase()
     d = File.load_binary('pattern_dictionary.bin')
+    c = 0
     for k in d:
-        print(d[k])
+        if d[k]['steps'] == -1:
+            c += 1
+    print(c)
 
 
 

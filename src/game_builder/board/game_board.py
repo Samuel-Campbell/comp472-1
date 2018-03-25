@@ -246,11 +246,13 @@ class GameBoard:
         index0 = [i for i, j in enumerate(self.__board[0]) if j >= 1]
         index1 = [i for i, j in enumerate(self.__board[1]) if j >= 1]
         index2 = [i for i, j in enumerate(self.__board[2]) if j >= 1]
+        content0 = [x for x in self.__board[0] if x > 0]
+        content2 = [x for x in self.__board[2] if x > 0]
         if len(index0) == 0:
             return False
         elif len(index2) == 0:
             return False
         elif len(index1) > 0:
             return False
-        return index0 == index2
+        return (index0 == index2) and (content0 == content2)
 

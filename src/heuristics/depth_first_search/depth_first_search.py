@@ -58,15 +58,14 @@ class DepthFirstSearch:
 if __name__ == '__main__':
     pattern_dictionary = File.load_binary('pattern_dictionary.bin')
     i = 0
-    t = 1
-    unsolved = 0
     for key in pattern_dictionary:
         percent = i / len(pattern_dictionary) * 100
-        stdout.write("\rProgress: {}".format(percent))
-        stdout.flush()
-        max_iter = 15
+        max_iter = 35
+        i += 1
         if pattern_dictionary[key]['steps'] == -1:
             while True:
+                stdout.write("\rProgress: {} Iteration: {}".format(percent, max_iter))
+                stdout.flush()
                 board = GameBoard(verbose=False)
                 board.create_game_from_array(pattern_dictionary[key]['array'])
                 dfs = DepthFirstSearch(board, max_iter)
@@ -75,15 +74,8 @@ if __name__ == '__main__':
                     pattern_dictionary[key]['steps'] = dfs.steps
                     dfs.move_sequence.reverse()
                     pattern_dictionary[key]['moves'] = dfs.move_sequence
-                    if percent >= t:
-                        t = int(percent) + 1
-                        File.save_binary('pattern_dictionary.bin', pattern_dictionary)
-                    break
-                if max_iter >= 20:
-                    unsolved += 1
+                    File.save_binary('pattern_dictionary.bin', pattern_dictionary)
                     break
                 max_iter += 1
-        i += 1
     print()
-    print('unsolved puzzles {}'.format(unsolved))
     File.save_binary('pattern_dictionary.bin', pattern_dictionary)

@@ -8,6 +8,7 @@ class AStar:
 
     def __init__(self, board):
         self.board = board
+        self.move_sequence = []
 
     def search(self):
         while not self.board.game_cleared():
@@ -15,21 +16,13 @@ class AStar:
             pairs = self.find_pairs(board_state)
             best_pattern = None
             move_count = 5000
-            c = None
-            t = None
             for pair in pairs:
                 transformed_board = self.transform_board(board_state, pair)
                 value = self.pattern_dictionary[str(transformed_board)]
                 if value['steps'] < move_count:
                     move_count = value['steps']
                     best_pattern = value['moves']
-                    c = pair
-                    t = transformed_board
-            board.display()
-            print(best_pattern)
-            print(c)
-            print(t)
-            print()
+            self.move_sequence += best_pattern
             for move in best_pattern:
                 if move == 'r':
                     self.board.move_right()
@@ -79,3 +72,4 @@ if __name__ == "__main__":
     board.create_random_game(GameDifficultyEnum.MASTER)
     astar = AStar(board)
     astar.search()
+    print(len(astar.move_sequence))

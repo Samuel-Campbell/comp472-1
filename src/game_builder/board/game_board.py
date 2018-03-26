@@ -61,7 +61,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if x < (len(self.__board[0]) - 1):
             tmp = self.__board[y][x + 1]
-            self.__board[y][x + 1] = 0
+            self.__board[y][x + 1] = self.__board[y][x]
             self.__board[y][x] = tmp
             self.__empty_cell = (x + 1, y)
             move = self.position_to_letter[(x + 1, y)]
@@ -81,7 +81,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if y < (len(self.__board) - 1):
             tmp = self.__board[y + 1][x]
-            self.__board[y + 1][x] = 0
+            self.__board[y + 1][x] = self.__board[y][x]
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y + 1)
             move = self.position_to_letter[(x, y + 1)]
@@ -103,7 +103,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if x > 0:
             tmp = self.__board[y][x - 1]
-            self.__board[y][x - 1] = 0
+            self.__board[y][x - 1] = self.__board[y][x]
             self.__board[y][x] = tmp
             self.__empty_cell = (x - 1, y)
             move = self.position_to_letter[(x - 1, y)]
@@ -123,7 +123,7 @@ class GameBoard:
         y = self.__empty_cell[1]
         if y > 0:
             tmp = self.__board[y - 1][x]
-            self.__board[y - 1][x] = 0
+            self.__board[y - 1][x] = self.__board[y][x]
             self.__board[y][x] = tmp
             self.__empty_cell = (x, y - 1)
             move = self.position_to_letter[(x, y - 1)]
@@ -183,6 +183,13 @@ class GameBoard:
             games_list.append(line)
         file.close()
         return games_list
+
+    def create_game_with_mapping(self, array, value):
+        top_row = array[:5]
+        middle_row = array[5:10]
+        bottom_row = array[-5:]
+        self.__board = numpy.array([top_row, middle_row, bottom_row])
+        self.__find_empty_cell(value)
 
     def create_game_from_array(self, array):
         top_row = array[:5]

@@ -119,9 +119,6 @@ class PatternDatabase:
             array = pattern_dictionary[key]['array']
             current_position =  [i for i, j in enumerate(array) if j == 0]
             movements = pattern_dictionary[key]['moves']
-            if movements is None or movements == -1:
-                pattern_dictionary[key]['final_mapping'] = None
-                continue
             board = GameBoard(verbose=False)
             board.create_game_with_mapping(initial_mapping, current_position[0])
             for move in movements:

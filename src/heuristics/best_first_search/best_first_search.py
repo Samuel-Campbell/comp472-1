@@ -67,7 +67,8 @@ class BestFirstSearch:
 
 
 if __name__ == "__main__":
-    board = GameBoard(verbose=False)
-    board.create_random_game(GameDifficultyEnum.MASTER)
-    astar = BestFirstSearch(board)
-    astar.search()
+    for i in range(1000):
+        board = GameBoard(verbose=False)
+        board.create_random_game(GameDifficultyEnum.MASTER)
+        astar = BestFirstSearch(board)
+        astar.search()

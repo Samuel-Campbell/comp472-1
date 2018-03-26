@@ -1,5 +1,5 @@
 from game_builder.game.abstract_game import AbstractGame
-from heuristics.strategic_solver.strategic_solver import StrategicSolver
+from heuristics.best_first_search.best_first_search import BestFirstSearch
 
 
 class AutoGame(AbstractGame):
@@ -7,5 +7,5 @@ class AutoGame(AbstractGame):
         AbstractGame.__init__(self, board)
 
     def run(self):
-        ss = StrategicSolver(self._board, verbose=True)
-        ss.solve()
+        bfs = BestFirstSearch(self._board)
+        bfs.search()

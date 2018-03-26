@@ -1,11 +1,11 @@
 import unittest
-from heuristics.a_star.a_star import AStar
+from heuristics.best_first_search.best_first_search import BestFirstSearch
 from game_builder.board.game_board import GameBoard, GameDifficultyEnum
 
 
 class TestAStar(unittest.TestCase):
     def test_find_pairs(self):
-        astar = AStar(None)
+        astar = BestFirstSearch(None)
         array = [0, 1, 2, 3, 4,
                  5, 6, 1, 2, 3,
                  4, 1, 6, 1, 4]
@@ -15,7 +15,7 @@ class TestAStar(unittest.TestCase):
         #self.assertEqual(expected_result, result)
 
     def test_transform_bord(self):
-        astar = AStar(None)
+        astar = BestFirstSearch(None)
         array = \
             [0, 1, 2, 3, 4,
              5, 6, 1, 2, 3,
@@ -27,5 +27,5 @@ class TestAStar(unittest.TestCase):
     def test_search(self):
         board = GameBoard(verbose=False)
         board.create_random_game(GameDifficultyEnum.MASTER)
-        astar = AStar(board)
+        astar = BestFirstSearch(board)
         astar.search()

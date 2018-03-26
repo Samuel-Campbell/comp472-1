@@ -3,12 +3,11 @@ from game_builder.board.game_board import GameBoard, GameDifficultyEnum
 import itertools
 
 
-class AStar:
+class BestFirstSearch:
     pattern_dictionary = File.load_binary('pattern_dictionary.bin')
 
     def __init__(self, board):
         self.board = board
-        self.move_sequence = []
 
     def search(self):
         while not self.board.game_cleared():
@@ -22,7 +21,6 @@ class AStar:
                 if value['steps'] < move_count:
                     move_count = value['steps']
                     best_pattern = value['moves']
-            self.move_sequence += best_pattern
             for move in best_pattern:
                 if move == 'r':
                     self.board.move_right()
@@ -67,9 +65,9 @@ class AStar:
         transformed_array[zero_index] = 0
         return transformed_array
 
+
 if __name__ == "__main__":
     board = GameBoard(verbose=False)
     board.create_random_game(GameDifficultyEnum.MASTER)
-    astar = AStar(board)
+    astar = BestFirstSearch(board)
     astar.search()
-    print(len(astar.move_sequence))

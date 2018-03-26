@@ -67,8 +67,10 @@ class BestFirstSearch:
 
 
 if __name__ == "__main__":
-    for i in range(1000):
+    moves = 0
+    for i in range(50):
         board = GameBoard(verbose=False)
-        board.create_random_game(GameDifficultyEnum.MASTER)
+        board.create_random_game(GameDifficultyEnum.NOVICE)
         astar = BestFirstSearch(board)
         astar.search()
+        moves += len(board.move_sequence)

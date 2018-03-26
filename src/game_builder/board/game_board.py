@@ -46,7 +46,6 @@ class GameBoard:
         self.__empty_cell = (0, 0)
         self.__verbose = verbose
         self.difficulty = None
-        self.candy_count = None
         self.move_sequence = []
 
     def move_right(self):
@@ -150,19 +149,15 @@ class GameBoard:
         board_list = []
         if game_difficulty == GameDifficultyEnum.NOVICE:
             board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3]
-            self.candy_count = numpy.array([1, 6, 6, 2, 0, 0, 0])
 
         elif game_difficulty == GameDifficultyEnum.APPRENTICE:
             board_list = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4]
-            self.candy_count = numpy.array([1, 6, 4, 2, 2, 0, 0])
 
         elif game_difficulty == GameDifficultyEnum.EXPERT:
             board_list = [0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5]
-            self.candy_count = numpy.array([1, 4, 4, 2, 2, 2, 0])
 
         elif game_difficulty == GameDifficultyEnum.MASTER:
             board_list = [0, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
-            self.candy_count = numpy.array([1, 4, 2, 2, 2, 2, 2])
 
         board = numpy.array(board_list)
         numpy.random.shuffle(board)
@@ -197,10 +192,13 @@ class GameBoard:
         bottom_row = array[-5:]
         self.__board = numpy.array([top_row, middle_row, bottom_row])
         self.__find_empty_cell()
-        self.candy_count = numpy.array([0, 0, 0, 0, 0, 0, 0])
-        for row in self.__board:
-            for column in row:
-                self.candy_count[column] += 1
+
+    def copy(self):
+        board = self.__board.copy()
+        array = numpy.array(list(board[0]) + list(board[1]) + list(board[2]))
+        board = GameBoard(verbose=False)
+        board.create_game_from_array(array)
+        return board
 
     def __find_empty_cell(self, value = 0):
         """

@@ -70,7 +70,7 @@ class BestFirstSearch:
 if __name__ == "__main__":
     c = 0
     for i in range(100000):
-        percent = i / 100000
+        percent = i / 100000 * 100
         stdout.write("\rNovice: {}".format(percent))
         stdout.flush()
         board = GameBoard(verbose=False)
@@ -80,11 +80,11 @@ if __name__ == "__main__":
         if not board.game_cleared():
             c += 1
     print()
-    print(c)
+    print("Errors: {}".format(c))
     print()
     c = 0
     for i in range(100000):
-        percent = i / 100000
+        percent = i / 100000 * 100
         stdout.write("\rApprentice: {}".format(percent))
         stdout.flush()
         board = GameBoard(verbose=False)
@@ -94,11 +94,11 @@ if __name__ == "__main__":
         if not board.game_cleared():
             c += 1
     print()
-    print(c)
+    print("Errors: {}".format(c))
     print()
     c = 0
     for i in range(100000):
-        percent = i / 100000
+        percent = i / 100000 * 100
         stdout.write("\rExpert: {}".format(percent))
         stdout.flush()
         board = GameBoard(verbose=False)
@@ -108,11 +108,11 @@ if __name__ == "__main__":
         if not board.game_cleared():
             c += 1
     print()
-    print(c)
+    print("Errors: {}".format(c))
     print()
     c = 0
     for i in range(100000):
-        percent = i / 100000
+        percent = i / 100000 * 100
         stdout.write("\rMaster: {}".format(percent))
         stdout.flush()
         board = GameBoard(verbose=False)
@@ -122,4 +122,4 @@ if __name__ == "__main__":
         if not board.game_cleared():
             c += 1
     print()
-    print(c)
+    print("Errors: {}".format(c))

@@ -1,6 +1,7 @@
 from util.file import File
 from game_builder.board.game_board import GameBoard, GameDifficultyEnum
 import itertools
+from sys import stdout
 
 
 class BestFirstSearch:
@@ -67,10 +68,58 @@ class BestFirstSearch:
 
 
 if __name__ == "__main__":
-    moves = 0
-    for i in range(50):
+    c = 0
+    for i in range(100000):
+        percent = i / 100000
+        stdout.write("\rNovice: {}".format(percent))
+        stdout.flush()
         board = GameBoard(verbose=False)
         board.create_random_game(GameDifficultyEnum.NOVICE)
         astar = BestFirstSearch(board)
         astar.search()
-        moves += len(board.move_sequence)
+        if not board.game_cleared():
+            c += 1
+    print()
+    print(c)
+    print()
+    c = 0
+    for i in range(100000):
+        percent = i / 100000
+        stdout.write("\rApprentice: {}".format(percent))
+        stdout.flush()
+        board = GameBoard(verbose=False)
+        board.create_random_game(GameDifficultyEnum.APPRENTICE)
+        astar = BestFirstSearch(board)
+        astar.search()
+        if not board.game_cleared():
+            c += 1
+    print()
+    print(c)
+    print()
+    c = 0
+    for i in range(100000):
+        percent = i / 100000
+        stdout.write("\rExpert: {}".format(percent))
+        stdout.flush()
+        board = GameBoard(verbose=False)
+        board.create_random_game(GameDifficultyEnum.EXPERT)
+        astar = BestFirstSearch(board)
+        astar.search()
+        if not board.game_cleared():
+            c += 1
+    print()
+    print(c)
+    print()
+    c = 0
+    for i in range(100000):
+        percent = i / 100000
+        stdout.write("\rMaster: {}".format(percent))
+        stdout.flush()
+        board = GameBoard(verbose=False)
+        board.create_random_game(GameDifficultyEnum.MASTER)
+        astar = BestFirstSearch(board)
+        astar.search()
+        if not board.game_cleared():
+            c += 1
+    print()
+    print(c)
